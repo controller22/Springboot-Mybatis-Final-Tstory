@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shop.mtcoding.tstory.model.visit.VisitRepository">
+
+	<select id="findById"
+		resultType="shop.mtcoding.tstory.model.visit.Visit">
+		SELECT * FROM visit WHERE visit_id=#{visitId}
+	</select>
+
+	<select id="findAll"
+		resultType="shop.mtcoding.tstory.model.visit.Visit">
+		SELECT *
+		FROM visit 
+		WHERE visit_id=#{visitId}
+	</select>
+
+	<insert id="insert">
+		INSERT
+		INTO visit(user_id, total_count, updated_at, created_at)
+		VALUES(#{userId}, #{totalCount}, now(), now())
+	</insert>
+
+    <update id="update">
+          UPDATE visit
+		  SET user_id = #{userId},
+		  total_count = #{totalCount}
+    </update>
+
+	<delete id="delete">
+		DELETE FROM visit WHERE visit_id = #{visitId}
+	</delete>
+
+</mapper>
