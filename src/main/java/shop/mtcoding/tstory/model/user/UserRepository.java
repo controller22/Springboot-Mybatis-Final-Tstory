@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import shop.mtcoding.tstory.dto.user.CheckDto;
 import shop.mtcoding.tstory.dto.user.JoinDto;
+import shop.mtcoding.tstory.dto.user.LoginDto;
 
 @Mapper
 public interface UserRepository {
@@ -24,4 +25,6 @@ public interface UserRepository {
     public CheckDto findByEmail(String email);
 
     public CheckDto findByNickname(String nickname);
+
+    public User login(LoginDto loginDto);
 }

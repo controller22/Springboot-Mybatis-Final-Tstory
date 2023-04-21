@@ -1,3 +1,3 @@
-INSERT INTO user_tb(username, password, email, nickname, profile_img ,updated_at,created_at) VALUES('ssar','1234','ssar@nate.com', 'ssar','testimg1',NOW(), NOW());
-INSERT INTO user_tb(username, password, email, nickname, profile_img ,updated_at,created_at) VALUES('cos','1234','cos@nate.com','cos','testimg2',NOW(), NOW());
-INSERT INTO user_tb(username, password, email, nickname, profile_img ,updated_at,created_at) VALUES('tan','1234','tan@nate.com','tan','testimg3',NOW(), NOW());
+INSERT INTO user_tb(username, password, email, nickname, profile_img ,role,updated_at,created_at) VALUES('ssar','1234','ssar@nate.com', 'ssar','testimg1','user',NOW(), NOW());
+INSERT INTO user_tb(username, password, email, nickname, profile_img ,role,updated_at,created_at) VALUES('cos','1234','cos@nate.com','cos','testimg2','admin',NOW(), NOW());
+INSERT INTO user_tb(username, password, email, nickname, profile_img ,role,updated_at,created_at) VALUES('tan','1234','tan@nate.com','tan','testimg3','user',NOW(), NOW());

@@ -5,6 +5,7 @@ create table user_tb(
     nickname varchar(20) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
     profile_img LONGTEXT,
+    role VARCHAR(10) DEFAULT 'USER',
     updated_at TIMESTAMP NOT NULL,
     created_at TIMESTAMP NOT NULL
 );

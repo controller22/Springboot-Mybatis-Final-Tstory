@@ -12,14 +12,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.tstory.dto.ResponseDto;
 import shop.mtcoding.tstory.dto.user.JoinDto;
+import shop.mtcoding.tstory.dto.user.LoginDto;
 import shop.mtcoding.tstory.model.user.User;
+import shop.mtcoding.tstory.model.user.UserRepository;
 import shop.mtcoding.tstory.service.UserService;
 
 @RequiredArgsConstructor
 @Controller
 public class UserController {
     private final HttpSession session;
-    // private final UserDao userDao;
+    private final UserRepository userRepository;
     private final UserService userService;
 
     // 회원가입 페이지
@@ -31,10 +33,6 @@ public class UserController {
     // 회원가입 응답
     @PostMapping("/join")
     public @ResponseBody ResponseDto<?> join(@RequestBody JoinDto joinDto) {
-        System.out.println("디버깅 : "+joinDto.getUsername());
-        System.out.println("디버깅 : "+joinDto.getPassword());
-        System.out.println("디버깅 : "+joinDto.getNickname());
-        System.out.println("디버깅 : "+joinDto.getEmail());
         userService.회원가입(joinDto);
         return new ResponseDto<>(1, "회원가입성공", null);
     }
@@ -46,16 +44,20 @@ public class UserController {
     }
 
     // 로그인 응답
-    // @PostMapping("/user/login")
-    // public String login(LoginDto loginDto) {
-    //     User userPS = userDao.login(loginDto);
-    //     if (userPS != null) {
-    //         session.setAttribute("principal", userPS);
-    //         return "redirect:/";
-    //     } else {
-    //         return "redirect:/user/loginForm";
-    //     }
-    // }
+    @PostMapping("/login")
+    public String login(LoginDto loginDto) {
+        User userPS = userRepository.login(loginDto);
+        System.out.println("디버깅 : "+ loginDto.getUsername());
+        System.out.println("디버깅 : "+ loginDto.getPassword());
+        System.out.println("디버깅 : "+ userPS);
+       
+        if (userPS != null) {
+            session.setAttribute("principal", userPS);
+            return "redirect:/";
+        } else {
+            return "redirect:/user/loginForm";
+        }
+    }
 
     // 로그아웃
     @GetMapping("/user/logout")

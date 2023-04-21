@@ -334,13 +334,13 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
         var spaceRule = /\s/g;
         var korRule = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
 
-        // if (korRule.test(password)) {
-        //     $(".passwordValid").css("display", "inline-block");
-        //     $(".passwordValid").text(
-        //         "숫자, 영문 대소문자, 특수문자 중 두가지 이상으로 조합해 주십시오."
-        //     );
-        //     return true;
-        // }
+        if (korRule.test(password)) {
+            $(".passwordValid").css("display", "inline-block");
+            $(".passwordValid").text(
+                "숫자, 영문 대소문자, 특수문자 중 두가지 이상으로 조합해 주십시오."
+            );
+            return true;
+        }
 
         if (spaceRule.test(password)) {
             $(".passwordValid").css("display", "inline-block");

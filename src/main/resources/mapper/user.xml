@@ -9,10 +9,15 @@
 		SELECT * FROM user_tb WHERE user_id=#{userId}
 	</select>
 
+	<select id="login"
+		resultType="shop.mtcoding.tstory.model.user.User">
+		SELECT * FROM user_tb WHERE username = #{username} and password = #{password}
+	</select>
+
 	<select id="findAll"
 		resultType="shop.mtcoding.tstory.model.user.User">
 		SELECT *
-		FROM user 
+		FROM user_tb
 		WHERE user_id=#{userId}
 	</select>
 

@@ -25,11 +25,6 @@ public class UserService {
 	public void 회원가입(JoinDto joinDto) {
 		String encPassword = sha256.encrypt(joinDto.getPassword());
 		joinDto.setPassword(encPassword); // 회원가입으로 받은 비밀번호 암호화
-		System.out.println("디버깅11 : "+joinDto.getUsername());
-        System.out.println("디버깅11 : "+joinDto.getPassword());
-        System.out.println("디버깅11 : "+joinDto.getNickname());
-        System.out.println("디버깅11 : "+joinDto.getEmail());
-        System.out.println("디버깅112 : "+joinDto.toModel());
 		userRepository.insert(joinDto);
 		System.out.println("디버깅11 : ");
 	}
