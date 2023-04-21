@@ -82,9 +82,7 @@ pageEncoding="UTF-8"%>
                             >내블로그</a
                         >
                         <a class="dropdown-item" href="/update/1">계정관리</a>
-                        <a class="dropdown-item" href="/write/category"
-                            >카테고리관리</a
-                        >
+                        <a class="dropdown-item" href="/write/category">카테고리관리</a>
                         <a class="dropdown-item" href="/logout">로그아웃</a>
                     </div>
                 </div>

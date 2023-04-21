@@ -1,15 +1,15 @@
-
 create table user_tb(
-    users_id int primary KEY auto_increment,
+    user_id int primary KEY auto_increment,
     username VARCHAR(20) NOT NULL UNIQUE,
-    password varchar(20) NOT NULL,
+    password varchar(100) NOT NULL,
+    nickname varchar(20) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
     profile_img LONGTEXT,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    created_at TIMESTAMP NOT NULL DEFAULT current_timestamp
+    updated_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP NOT NULL
 );
 
-create table category(
+create table category_tb(
     category_id int primary KEY AUTO_INCREMENT,
     category_title VARCHAR(50) UNIQUE,
     user_id int NOT NULL,
@@ -17,17 +17,17 @@ create table category(
     created_at TIMESTAMP NOT NULL DEFAULT current_timestamp
 );
 
-create table love(
+create table love_tb(
     love_id int primary KEY auto_increment,
     post_id INT NOT NULL,
     user_id INT NOT NULL,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE current_timestamp,
     created_at TIMESTAMP NOT NULL DEFAULT current_timestamp,
-     UNIQUE uk_loves (user_id,post_id)
+    UNIQUE uk_loves (user_id,post_id)
 );
 
 
-create table post(
+create table post_tb(
     post_id int primary KEY auto_increment,
     post_title varchar(20) NOT null,
     post_content longtext NOT null,
@@ -38,7 +38,7 @@ create table post(
     created_at TIMESTAMP NOT NULL DEFAULT current_timestamp
 );
 
-create table visit(
+create table visit_tb(
     visit_id int primary KEY auto_increment,
     user_id int NOT null,
     total_count int NOT null,

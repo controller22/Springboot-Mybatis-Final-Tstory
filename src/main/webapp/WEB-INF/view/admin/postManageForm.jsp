@@ -19,11 +19,7 @@
 					<td>${post.nickname}</td>
 					<td>${post.createdAt}</td> 
 				 <td>
-                        <a
-                            href=""
-                            class="btn btn-warning"
-                            >수정</a
-                        >
+                        <a href="" class="btn btn-warning">수정</a>
                     </td>
                     <td>
                         <form

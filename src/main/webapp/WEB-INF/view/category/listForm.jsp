@@ -22,10 +22,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
 </c:if>
     <input type="hidden" value="${category.categoryId}" id="categoryId">
      <!-- 검색바 -->
-        <div
-            class="form-group row justify-content-left"
-            style="margin-left: 10px"
-        >
+        <div class="form-group row justify-content-left" style="margin-left: 10px">
             <div class="d-flex justify-content-end">
                 <div>
                     <form style="display: inline-flex" method="get" action="/category/listForm/${category.categoryId}/${category.userId}">

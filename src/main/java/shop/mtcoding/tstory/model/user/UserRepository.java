@@ -4,15 +4,24 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import shop.mtcoding.tstory.dto.user.CheckDto;
+import shop.mtcoding.tstory.dto.user.JoinDto;
+
 @Mapper
 public interface UserRepository {
     public User findById(Integer userId);
 
 	public List<User> findAll();
 
-	public void insert(User user);
+	public void insert(JoinDto joinDto);
 
 	public void update(User user);
 
 	public void delete(User user);
+
+    public User findByUsername(String username);
+
+    public CheckDto findByEmail(String email);
+
+    public CheckDto findByNickname(String nickname);
 }

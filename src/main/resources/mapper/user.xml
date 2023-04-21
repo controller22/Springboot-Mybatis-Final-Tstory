@@ -6,7 +6,7 @@
 
 	<select id="findById"
 		resultType="shop.mtcoding.tstory.model.user.User">
-		SELECT * FROM user WHERE user_id=#{userId}
+		SELECT * FROM user_tb WHERE user_id=#{userId}
 	</select>
 
 	<select id="findAll"
@@ -18,12 +18,12 @@
 
 	<insert id="insert">
 		INSERT
-		INTO user(username, password, email,profile_img, updated_at, created_at)
-		VALUES(#{username}, #{password}, #{email}, #{profileImg}, now(), now())
+		INTO user_tb(username, password, email, nickname, updated_at, created_at)
+		VALUES(#{username}, #{password}, #{email}, #{nickname}, now(), now())
 	</insert>
 
     <update id="update">
-          UPDATE user
+          UPDATE user_tb
 		  SET username = #{username},
 		  password = #{password},
 		  email = #{email},
@@ -32,9 +32,26 @@
     </update>
 
 	<delete id="delete">
-		DELETE FROM user WHERE user_id = #{userId}
+		DELETE FROM user_tb WHERE user_id = #{userId}
 	</delete>
 
 
+	<select id="findByUsername" resultType="shop.mtcoding.tstory.model.user.User">
+        SELECT *
+		FROM user_tb
+		WHERE username= #{username}
+    </select>
+
+    <select id="findByNickname"  resultType="shop.mtcoding.tstory.dto.user.CheckDto">
+        SELECT nickname
+		FROM user_tb
+		WHERE nickname = #{nickname}
+    </select>
+
+    <select id="findByEmail"  resultType="shop.mtcoding.tstory.dto.user.CheckDto">
+        SELECT email
+		FROM user_tb
+		WHERE email = #{email}
+    </select>
 
 </mapper>

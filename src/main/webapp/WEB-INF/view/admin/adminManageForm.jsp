@@ -17,17 +17,10 @@
 					<td>${user.username}</td>
 					<td>${user.createdAt}</td>
 				 <td>
-                        <a
-                            href=""
-                            class="btn btn-warning"
-                            >수정</a
-                        >
+                        <a href="" class="btn btn-warning">수정</a>
                     </td>
                     <td>
-                        <form
-                            action=""
-                            method="post"
-                        >
+                        <form action="" method="post">
                             <button class="btn btn-danger">삭제</button>
                         </form>
                     </td>

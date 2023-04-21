@@ -34,3 +34,8 @@
     outline: none;
     border-bottom: 2px solid black;
 }
+
+.my_auth_form_box_info_security_detail{
+    width: 150px;
+    align-self: flex-end;
+}
