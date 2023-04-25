@@ -113,7 +113,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
 
                 <div>
                     <div style="text-align: right">
-                        <a href="/s/api/user/profileUpdateForm">
+                        <a href="/user/profileUpdateForm">
                             <button
                                 type="submit"
                                 class="btn btn-outline-primary"

@@ -37,4 +37,6 @@ public interface UserRepository {
     public void delete(Integer userId);
 
     public void updateByPassword(@Param("passwordUpdate") String passwordUpdate, @Param("userId") Integer userId);
+
+    public void updateByNickname(@Param("nickname") String nickname,@Param("userId")  Integer userId);
 }

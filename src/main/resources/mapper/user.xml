@@ -74,4 +74,9 @@
           UPDATE user_tb SET password = #{passwordUpdate}, email = #{email} WHERE user_id = #{userId}
     </update>
 
+	<update id="updateByNickname">
+          UPDATE user_tb set nickname = #{nickname} WHERE user_id = #{userId}
+    </update>
+
+
 </mapper>
