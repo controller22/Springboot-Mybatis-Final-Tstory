@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop.mtcoding.tstory.model.post.PostRepository">
 
+ 	
 	<select id="findAllAndUsername" resultType="shop.mtcoding.tstory.dto.post.PostAllRespDto">
         SELECT u.user_id, p.post_id, u.username, p.post_title, p.post_thumnail, p.created_at, u.nickname
 		FROM post_tb p LEFT JOIN  user_tb u ON p.user_id = u.user_id
@@ -51,6 +52,12 @@
 		DELETE FROM post_tb WHERE post_id = #{postId}
 	</delete>
 
-
+	<select id="findByIdAndUser" resultType="shop.mtcoding.tstory.dto.post.PostDetailDto">	
+		SELECT p.user_id,p.updated_at,p.category_id,p.post_id,p.post_content,p.post_title,u.nickname,u.user_id
+		FROM post_tb p 
+		LEFT JOIN  user_tb u
+		ON p.user_id = u.user_id
+		WHERE p.post_id = #{postId}
+    </select>
 
 </mapper>

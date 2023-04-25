@@ -124,7 +124,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                 >
                                  </c:when>
                                  </c:choose>
-                                <a class="dropdown-item" href="/user/logout"
+                                <a class="dropdown-item" href="/logout"
                                     >로그아웃</a
                                 >
                             </div>
@@ -165,7 +165,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                 >
                                  </c:when>
                                  </c:choose>
-                                <a class="dropdown-item" href="/user/logout"
+                                <a class="dropdown-item" href="/logout"
                                     >로그아웃</a
                                 >
                             </div>
@@ -175,7 +175,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     </c:when>
     <c:otherwise>
            <div>
-                <a class="my_main_start_btn" href="/user/loginForm">시작하기</a>
+                <a class="my_main_start_btn" href="/loginForm">시작하기</a>
             </div>
     </c:otherwise>
 </c:choose>

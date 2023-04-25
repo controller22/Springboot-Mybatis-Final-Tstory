@@ -7,22 +7,27 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.tstory.dto.ResponseDto;
+import shop.mtcoding.tstory.dto.post.PostDetailDto;
+import shop.mtcoding.tstory.model.category.CategoryRespository;
+import shop.mtcoding.tstory.model.post.PostRepository;
+import shop.mtcoding.tstory.model.user.User;
+import shop.mtcoding.tstory.model.user.UserRepository;
+import shop.mtcoding.tstory.service.PostService;
+import shop.mtcoding.tstory.service.SubscribeService;
 
 @RequiredArgsConstructor
 @Controller
 public class PostController {
 	private final HttpSession session;
-	// private final PostService postService;
-	// private final PostDao postDao;
-	// private final UserDao userDao;
-	// private final CategoryDao categoryDao;
-	// private final SubscribeService subscribeService;
+	private final PostService postService;
+	private final PostRepository postRepository;
+	private final UserRepository userRepository;
+	private final CategoryRespository categoryRespository;
+	private final SubscribeService subscribeService;
 
 	// 게시글 수정하기 페이지
 	@GetMapping("/post/updateForm/{categoryId}/{postId}")
@@ -122,22 +127,29 @@ public class PostController {
 	// 게시글 상세보기 페이지
 	@GetMapping("/post/detailForm/{postId}/{userId}")
 	public String detailForm(@PathVariable Integer postId, @PathVariable Integer userId, Model model) {
-		// User principal = (User) session.getAttribute("principal");
+		User principal = (User) session.getAttribute("principal");
 
-		// // 좋아요 화면에 넣는용도
-		// if (principal == null) { 
-		// 	PostDetailDto postDetail = postDao.findByIdAndUser(postId, null);
-		// 	model.addAttribute("post", postDetail);
-		// 	model.addAttribute("user", userDao.findById(userId));
-		// 	model.addAttribute("categoryList", categoryDao.findByUserId(userId)); // 사이드바 카테고리
-		// 	model.addAttribute("postList", postDao.findByUserId(userId)); // 블로그 전체게시글
-		// } else {
-		// 	PostDetailDto postDetail = postDao.findByIdAndUser(postId, principal.getUserId());
-		// 	model.addAttribute("post", postDetail);
-		// 	model.addAttribute("user", userDao.findById(userId));
-		// 	model.addAttribute("categoryList", categoryDao.findByUserId(userId)); // 사이드바 카테고리
-		// 	model.addAttribute("postList", postDao.findByUserId(userId)); // 블로그 전체게시글
-		// }
+		// 좋아요 화면에 넣는용도
+		if (principal == null) {
+			// visitDao.countByVisit(userId, postId);
+			PostDetailDto postDetail = postRepository.findByIdAndUser(postId, null);
+			model.addAttribute("post", postDetail);
+			model.addAttribute("user", userRepository.findById(userId));
+			// model.addAttribute("categoryList", categoryRespository.findByUserId(userId)); // 사이드바 카테고리
+			// model.addAttribute("postList", postRepository.findByUserId(userId)); // 블로그 전체게시글
+			// model.addAttribute("visit", visitory.findByVisitCount(userId));
+		} else {
+			// visitDao.countByVisit(userId, postId);
+			PostDetailDto postDetail = postRepository.findByIdAndUser(postId, principal.getUserId());
+			model.addAttribute("post", postDetail);
+			if (principal != null) {
+				model.addAttribute("userImg", userRepository.findById(principal.getUserId()));
+			}
+			model.addAttribute("user", userRepository.findById(userId));
+			// model.addAttribute("categoryList", categoryDao.findByUserId(userId)); // 사이드바 카테고리
+			// model.addAttribute("postList", postDao.findByUserId(userId)); // 블로그 전체게시글
+			// model.addAttribute("visit", visitDao.findByVisitCount(userId));
+		}
 		return "/post/detailForm";
 	}
 

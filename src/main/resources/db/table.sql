@@ -4,7 +4,7 @@ create table user_tb(
     password varchar(100) NOT NULL,
     nickname varchar(20) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
-    profile_img LONGTEXT,
+    profile_img LONGTEXT DEFAULT '기본프로필이미지.jpg',
     role VARCHAR(10) DEFAULT 'USER',
     updated_at TIMESTAMP NOT NULL,
     created_at TIMESTAMP NOT NULL
