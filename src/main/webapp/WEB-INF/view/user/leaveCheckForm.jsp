@@ -20,7 +20,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
                 </div>
 
                 <div style="text-align: right">
-                    <button id="btnDelete" class="btn btn-outline-danger">
+                   0
                         탈퇴
                     </button>
                 </div>
@@ -43,7 +43,7 @@ function leave() {
 		password: $("#password").val()
 	};
 
-	$.ajax("/s/api/user/leave", {
+	$.ajax("/user/leave", {
 		type: "DELETE",
 		dataType: "json", // 응답 데이터
 		data: JSON.stringify(data), // http body에 들고갈 요청 데이터

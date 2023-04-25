@@ -4,6 +4,12 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop.mtcoding.tstory.model.user.UserRepository">
 
+	<select id="findByPasswordAndUserId"
+		resultType="shop.mtcoding.tstory.model.user.User">
+		SELECT * FROM user_tb WHERE user_id=#{userId} and password = #{password}
+	</select>
+
+
 	<select id="findById"
 		resultType="shop.mtcoding.tstory.model.user.User">
 		SELECT * FROM user_tb WHERE user_id=#{userId}
@@ -35,6 +41,10 @@
 		  profile_img = #{profileImg}
 
     </update>
+	
+    <update id="updateByPassword">
+          UPDATE user_tb SET password = #{passwordUpdate} WHERE  user_id = #{userId}
+    </update>
 
 	<delete id="delete">
 		DELETE FROM user_tb WHERE user_id = #{userId}
@@ -58,5 +68,10 @@
 		FROM user_tb
 		WHERE email = #{email}
     </select>
+
+
+	<update id="updateById">
+          UPDATE user_tb SET password = #{passwordUpdate}, email = #{email} WHERE user_id = #{userId}
+    </update>
 
 </mapper>

@@ -35,8 +35,8 @@ create table post_tb(
     post_thumnail longtext,
     user_id int NOT NULL,
     category_id INT,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE current_timestamp,
-    created_at TIMESTAMP NOT NULL DEFAULT current_timestamp
+    updated_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP NOT NULL
 );
 
 create table visit_tb(

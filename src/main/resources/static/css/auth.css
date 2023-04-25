@@ -5,9 +5,10 @@
 }
 
 .my_auth_form_box {
-    width: 400px;
+    width: 600px;
     border: 1px solid rgb(185, 185, 185);
     padding: 70px;
+    margin: 100px 0;
 }
 
 .my_auth_form_box_link {
