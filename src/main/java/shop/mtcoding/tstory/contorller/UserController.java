@@ -15,6 +15,7 @@ import shop.mtcoding.tstory.dto.ResponseDto;
 import shop.mtcoding.tstory.dto.user.JoinDto;
 import shop.mtcoding.tstory.dto.user.LoginDto;
 import shop.mtcoding.tstory.dto.user.PasswordCheckDto;
+import shop.mtcoding.tstory.dto.user.UpdateNicknameDto;
 import shop.mtcoding.tstory.dto.user.UpdatePasswordDto;
 import shop.mtcoding.tstory.dto.user.UserUpdateDto;
 import shop.mtcoding.tstory.model.user.User;
@@ -129,10 +130,7 @@ public class UserController {
     @PostMapping("/user/update")
     public @ResponseBody ResponseDto<?> update(@RequestBody UserUpdateDto userUpdateDto) {
         User principal = (User)session.getAttribute("principal");
-        System.out.println("디버그 : "+userUpdateDto.getEmail());
-        System.out.println("디버그 : "+userUpdateDto.getPasswordUpdate());
         userRepository.updateById(userUpdateDto.getPasswordUpdate(),userUpdateDto.getEmail(), principal.getUserId());
-        System.out.println("디버그 : "+userUpdateDto.getPasswordUpdate());
         return new ResponseDto<>(1, "성공", null);
     }
 
@@ -161,20 +159,19 @@ public class UserController {
     @PostMapping("/user/updatePassword")
     public @ResponseBody ResponseDto<?> updatePassword(@RequestBody UpdatePasswordDto updatePasswordDto) {
         User principal = (User) session.getAttribute("principal");
-        System.out.println("디버그11 : "+updatePasswordDto.getPasswordUpdate());
-        System.out.println("디버그11 : "+ principal.getUserId());
         userRepository.updateByPassword(updatePasswordDto.getPasswordUpdate(), principal.getUserId());
-        System.out.println("디버그11 : "+updatePasswordDto.getPasswordUpdate());
 
         return new ResponseDto<>(1, "성공", null);
     }
 
     // 닉네임 수정 응답
-    // @PostMapping("/user/updateNickname")
-    // public @ResponseBody CMRespDto<?> updateNickname(@RequestBody UpdateNicknameDto updateNicknameDto) {
-    //     User principal = (User) session.getAttribute("principal");
-    //     userDao.updateByNickname(updateNicknameDto.getNicknameUpdate(), principal.getUserId());
-    //     return new CMRespDto<>(1, "성공", null);
-    // }
-
+    @PostMapping("/user/updateNickname")
+    public @ResponseBody ResponseDto<?> updateNickname(@RequestBody UpdateNicknameDto updateNicknameDto) {
+        System.out.println("디버그 : "+updateNicknameDto.getNickname());
+        System.out.println("디버그 : "+updateNicknameDto.getNicknameUpdate());
+        User principal = (User) session.getAttribute("principal");
+        userRepository.updateByNickname(updateNicknameDto.getNicknameUpdate(), principal.getUserId());
+        System.out.println("디버그 : ");
+        return new ResponseDto<>(1, "성공", null);
+    }
 }
