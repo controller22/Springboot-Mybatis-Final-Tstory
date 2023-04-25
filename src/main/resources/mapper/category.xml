@@ -6,30 +6,30 @@
 
 	<select id="findById"
 		resultType="shop.mtcoding.tstory.model.category.Category">
-		SELECT * FROM category WHERE category_id=#{categoryId}
+		SELECT * FROM category_tb WHERE category_id=#{categoryId}
 	</select>
 
 	<select id="findAll"
 		resultType="shop.mtcoding.tstory.model.category.Category">
 		SELECT *
-		FROM category 
+		FROM category_tb 
 		WHERE category_id=#{categoryId}
 	</select>
 
 	<insert id="insert">
 		INSERT
-		INTO category(category_title, user_id, updated_at, created_at)
+		INTO category_tb(category_title, user_id, updated_at, created_at)
 		VALUES(#{categoryTitle}, #{userId}, now(), now())
 	</insert>
 
     <update id="update">
-          UPDATE category
+          UPDATE category_tb
 		  SET category_title = #{categoryTitle},
 		  user_id = #{userId}
     </update>
 
 	<delete id="delete">
-		DELETE FROM category WHERE category_id = #{categoryId}
+		DELETE FROM category_tb WHERE category_id = #{categoryId}
 	</delete>
 
 

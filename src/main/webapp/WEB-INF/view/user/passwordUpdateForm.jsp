@@ -11,27 +11,13 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
             </div>
             <input type="hidden" value="${principal.userId}" id="userId" />
 
-            <div style="display: flex">
-                <div class="my_auth_form_box_info_security_detail">
-                    현재 비밀번호
-                </div>
-                <input
-                    name="password"
-                    id="password"
-                    class="my_auth_form_box_input"
-                    type="password"
-                    placeholder="현재 비밀번호를 입력해주세요."
-                    maxlength="20"
-                    required
-                />
-            </div>
 
             <div style="display: flex">
-                <div class="my_auth_form_box_info_security_detail">
+                <div class="my_auth_form_box_info_security_detail" style="width: 200px; margin:15px;" >
                     변경할 비밀번호
                 </div>
                 <input
-                    oninput="validPassword();"
+                    oninput="validPassword()"
                     id="passwordUpdate"
                     class="my_auth_form_box_input"
                     type="password"
@@ -46,12 +32,12 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
             ></span>
 
             <div style="display: flex">
-                <div class="my_auth_form_box_info_security_detail">
+                <div class="my_auth_form_box_info_security_detail" style="width: 200px; margin:15px;">
                     비밀번호 확인
                 </div>
 
                 <input
-                    oninput="validPasswordSame();"
+                    oninput="validPasswordSame()"
                     id="passwordUpdateSame"
                     class="my_auth_form_box_input"
                     type="password"
@@ -90,11 +76,10 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
         }
 
         let data = {
-            passwordUpdate: $("#passwordUpdate").val(),
-            password: $("#password").val(),
+            passwordUpdate: $("#passwordUpdate").val()
         };
 
-        $.ajax("/s/api/user/updatePassword", {
+        $.ajax("/user/updatePassword", {
             type: "POST",
             dataType: "json",
             data: JSON.stringify(data),
@@ -104,7 +89,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
         }).done((res) => {
             if (res.code == 1) {
                 alert("현재 비밀번호가 변경되었습니다.");
-                location.href = "/s/api/user/updateForm";
+                location.href = "/";
             } else {
                 alert("현재 비밀번호를 다시 확인해주세요.");
                 return false;
@@ -115,7 +100,6 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
     function validPassword() {
         let passwordUpdate = $("#passwordUpdate").val();
         let passwordUpdateSame = $("#passwordUpdateSame").val();
-        let password = $("#password").val();
 
         var spaceRule = /\s/g;
         var korRule = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
@@ -140,11 +124,6 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
             return true;
         }
 
-        if (password.length < 1) {
-            $(".passwordValid").css("display", "inline-block");
-            $(".passwordValid").text("현재 비밀번호는 필수 정보입니다.");
-            return true;
-        }
 
         if (passwordUpdate.length < 8 || passwordUpdate.length > 30) {
             $(".passwordValid").css("display", "inline-block");

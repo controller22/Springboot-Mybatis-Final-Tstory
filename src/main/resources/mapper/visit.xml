@@ -6,30 +6,30 @@
 
 	<select id="findById"
 		resultType="shop.mtcoding.tstory.model.visit.Visit">
-		SELECT * FROM visit WHERE visit_id=#{visitId}
+		SELECT * FROM visit_tb WHERE visit_id=#{visitId}
 	</select>
 
 	<select id="findAll"
 		resultType="shop.mtcoding.tstory.model.visit.Visit">
 		SELECT *
-		FROM visit 
+		FROM visit_tb 
 		WHERE visit_id=#{visitId}
 	</select>
 
 	<insert id="insert">
 		INSERT
-		INTO visit(user_id, total_count, updated_at, created_at)
+		INTO visit_tb(user_id, total_count, updated_at, created_at)
 		VALUES(#{userId}, #{totalCount}, now(), now())
 	</insert>
 
     <update id="update">
-          UPDATE visit
+          UPDATE visit_tb
 		  SET user_id = #{userId},
 		  total_count = #{totalCount}
     </update>
 
 	<delete id="delete">
-		DELETE FROM visit WHERE visit_id = #{visitId}
+		DELETE FROM visit_tb WHERE visit_id = #{visitId}
 	</delete>
 
 </mapper>

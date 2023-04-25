@@ -4,26 +4,41 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop.mtcoding.tstory.model.post.PostRepository">
 
+	<select id="findAllAndUsername" resultType="shop.mtcoding.tstory.dto.post.PostAllRespDto">
+        SELECT u.user_id, p.post_id, u.username, p.post_title, p.post_thumnail, p.created_at, u.nickname
+		FROM post_tb p LEFT JOIN  user_tb u ON p.user_id = u.user_id
+		ORDER BY p.post_id DESC
+    </select>
+
+ 	<select id="findSearchAllPost" resultType="shop.mtcoding.tstory.dto.main.KeywordRespDto">
+		SELECT p.post_title, p.user_id, u.username, p.post_id, p.post_content, p.post_thumnail,u.nickname
+		FROM user_tb u 
+		LEFT JOIN post_tb p
+		ON u.user_id = p.user_id
+		WHERE p.post_title LIKE '%${keyword}%' 
+		ORDER BY p.post_id DESC
+    </select>
+
 	<select id="findById"
 		resultType="shop.mtcoding.tstory.model.post.Post">
-		SELECT * FROM post WHERE post_id=#{postId}
+		SELECT * FROM post_tb WHERE post_id=#{postId}
 	</select>
 
 	<select id="findAll"
 		resultType="shop.mtcoding.tstory.model.post.Post">
 		SELECT *
-		FROM post 
+		FROM post_tb 
 		WHERE post_id=#{postId}
 	</select>
 
 	<insert id="insert">
 		INSERT
-		INTO post(post_title, post_content, post_thumnail, user_id, category_id, updated_at, created_at)
+		INTO post_tb(post_title, post_content, post_thumnail, user_id, category_id, updated_at, created_at)
 		VALUES(#{postTitle}, #{postContent}, #{postThumnail}, #{userId}, #{categoryId}, now(), now())
 	</insert>
 
     <update id="update">
-          UPDATE post
+          UPDATE post_tb
 		  SET post_title = #{postTitle},
 		  post_content = #{postContent},
 		  post_thumnail = #{postThumnail},
@@ -33,7 +48,7 @@
     </update>
 
 	<delete id="delete">
-		DELETE FROM post WHERE post_id = #{postId}
+		DELETE FROM post_tb WHERE post_id = #{postId}
 	</delete>
 
 

@@ -32,7 +32,7 @@ pageEncoding="UTF-8"%> <div class="my_footer">
     </div>
 </div>
 
-<script src="/js/myDrawer.js"></script>
+<%-- <script src="/js/myDrawer.js"></script> --%>
 </body>
 
 </html>

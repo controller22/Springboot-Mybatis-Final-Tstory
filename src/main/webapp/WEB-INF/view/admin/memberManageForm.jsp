@@ -18,11 +18,7 @@
 					<td>${user.username}</td>
 					<td>${user.createdAt}</td>
 				 <td>
-                        <a
-                            href=""
-                            class="btn btn-warning"
-                            >수정</a
-                        >
+                        <a href="" class="btn btn-warning">수정</a>
                 </td>
                 <td>
                         <input type="hidden" value="${user.userId}" id="userId">
