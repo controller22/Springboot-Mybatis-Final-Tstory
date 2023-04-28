@@ -22,7 +22,7 @@ public interface PostRepository {
 
 	public void insert(Post post);
 
-	public void update(Post post);
+	public void update(PostUpdateReqDto postUpdateReqDto);
 
 	public void delete(int postId);
 

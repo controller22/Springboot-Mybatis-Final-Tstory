@@ -1,7 +1,5 @@
 package shop.mtcoding.tstory.contorller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -10,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -50,13 +49,14 @@ public class PostController {
 	}
 
 	// 게시글 수정 응답
-	// @PostMapping("/post/update")
-	// public String update(PostUpdateDto postUpdateDto, RedirectAttributes redirect) {
-	// 	postDao.insertUpdate(postUpdateDto);
-	// 	User principal = (User) session.getAttribute("principal");
-	// 	redirect.addAttribute("userId", principal.getUserId());
-	// 	return "redirect:/post/listForm/{userId}";
-	// }
+	@PutMapping("/post/update")
+	public @ResponseBody ResponseDto<?> update(@RequestBody PostUpdateReqDto postUpdateReqDto) {
+		System.out.println("디버그 : "+postUpdateReqDto.getPostContent());
+		User principal = (User) session.getAttribute("principal");
+		postService.게시글수정하기(postUpdateReqDto,principal.getUserId());
+		// model.addAttribute("userId", principal.getUserId());
+		return new ResponseDto<>(1, "게시글 수정성공", null);
+	}
 
 	// 게시글 등록 페이지
 	@GetMapping("/post/writeForm")

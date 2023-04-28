@@ -1,10 +1,13 @@
 package shop.mtcoding.tstory.service;
 
+import java.security.Principal;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.tstory.dto.post.PostSaveReqDto;
+import shop.mtcoding.tstory.dto.post.PostUpdateReqDto;
 import shop.mtcoding.tstory.model.post.PostRepository;
 
 @Service
@@ -49,6 +52,10 @@ public class PostService {
 		System.out.println("디버그11 ");
 	// }
 
+    }
+
+    public void 게시글수정하기(PostUpdateReqDto postUpdateReqDto,Integer principalId) {
+		postRepository.update(postUpdateReqDto);
     }
 }
     

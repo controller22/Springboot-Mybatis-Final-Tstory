@@ -30,7 +30,7 @@ create table love_tb(
 
 create table post_tb(
     post_id int primary KEY auto_increment,
-    post_title varchar(20) NOT null,
+    post_title varchar(50) NOT null,
     post_content longtext NOT null,
     post_thumnail longtext,
     user_id int NOT NULL,
