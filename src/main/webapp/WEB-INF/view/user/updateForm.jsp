@@ -137,7 +137,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
                 </div>
                
                     <div style="text-align: right">
-                         <button id="btnDelete" class="btn btn-outline-danger">
+                         <button id="btnDelete" onclick="leave()" class="btn btn-outline-danger">
                             회원탈퇴
                         </button>
                     </div></a

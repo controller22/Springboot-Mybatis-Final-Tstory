@@ -1,5 +1,7 @@
 package shop.mtcoding.tstory.contorller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.tstory.dto.ResponseDto;
 import shop.mtcoding.tstory.dto.user.CheckDto;
+import shop.mtcoding.tstory.model.user.User;
 import shop.mtcoding.tstory.service.UserService;
 
 @RequiredArgsConstructor
@@ -15,6 +18,7 @@ import shop.mtcoding.tstory.service.UserService;
 public class CheckController {
     
     private final UserService userService;
+    private final HttpSession session;
 
       // 아이디 중복체크
       @PostMapping("/check/username")
@@ -37,5 +41,13 @@ public class CheckController {
           return new ResponseDto<>(1, "성공", isSame);
       }
   
+      @PostMapping("/check/categoryTitle")
+      public @ResponseBody ResponseDto<Boolean> checkCategoryTitle(@RequestBody CheckDto checkDto) {
+        User principal = (User) session.getAttribute("principal");
+        System.out.println("디버그11 : ");
+        boolean isSame = userService.카테고리명중복확인(checkDto.getCategoryTitle(), principal.getUserId());
+        System.out.println("디버그 : "+isSame);
+          return new ResponseDto<>(1, "성공", isSame);
+      }
 
 }

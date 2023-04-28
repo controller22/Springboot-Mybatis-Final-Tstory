@@ -1,5 +1,7 @@
 package shop.mtcoding.tstory.contorller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -7,11 +9,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.tstory.dto.ResponseDto;
 import shop.mtcoding.tstory.dto.post.PostDetailDto;
+import shop.mtcoding.tstory.dto.post.PostSaveReqDto;
+import shop.mtcoding.tstory.dto.post.PostUpdateReqDto;
 import shop.mtcoding.tstory.model.category.CategoryRespository;
 import shop.mtcoding.tstory.model.post.PostRepository;
 import shop.mtcoding.tstory.model.user.User;
@@ -30,16 +36,16 @@ public class PostController {
 	private final SubscribeService subscribeService;
 
 	// 게시글 수정하기 페이지
-	@GetMapping("/post/updateForm/{categoryId}/{postId}")
-	public String updateForm(@PathVariable Integer categoryId, @PathVariable Integer postId, Model model) {
-		// User principal = (User) session.getAttribute("principal");
-		// if (principal == null) {
-		// 	return "redirect:/user/loginForm";
-		// }
-		// PostUpdateDto postUpdateDto = postDao.findByIdUpdate(postId, categoryId, principal.getUserId());
+	@GetMapping("/post/updateForm/{postId}")
+	public String updateForm( @PathVariable Integer postId, Model model) {
+		User principal = (User) session.getAttribute("principal");
+		if (principal == null) {
+			return "redirect:/loginForm";
+		}
+		PostUpdateReqDto postUpdateDto = postRepository.findByIdUpdate(postId, principal.getUserId());
 		// List<HeaderDto> titleDto = categoryDao.findByUserId(principal.getUserId());
+		model.addAttribute("post", postUpdateDto);
 		// model.addAttribute("titleList", titleDto);
-		// model.addAttribute("post", postUpdateDto);
 		return "/post/updateForm";
 	}
 
@@ -55,22 +61,25 @@ public class PostController {
 	// 게시글 등록 페이지
 	@GetMapping("/post/writeForm")
 	public String writeForm(Model model) {
-		// User principal = (User) session.getAttribute("principal");
-		// if (principal == null) {
-		// 	return "redirect:/user/loginForm";
-		// }
-		// List<HeaderDto> titleDto = categoryDao.findByUserId(principal.getUserId());
+		User principal = (User) session.getAttribute("principal");
+		if (principal == null) {
+			return "redirect:/loginForm";
+		}
+		// List<HeaderDto> titleDto = categoryRespository.findByUserId(principal.getUserId());
 		// model.addAttribute("titleList", titleDto);
 		return "/post/writeForm";
 	}
 
 	// 게시글 등록 응답
-	// @PostMapping("/post/write")
-	// public String write(PostSaveDto postSaveDto, RedirectAttributes redirect) {
-	// 	postDao.insertSave(postSaveDto);
-	// 	redirect.addAttribute("userId", postSaveDto.getUserId());
-	// 	return "redirect:/post/listForm/{userId}";
-	// }
+	@PostMapping("/post/write")
+	public @ResponseBody ResponseDto<?> write(
+		 // @RequestPart("file") MultipartFile file,
+			@RequestBody PostSaveReqDto postSaveReqDto) {
+		
+		User principal = (User) session.getAttribute("principal");
+		postService.게시글등록하기(postSaveReqDto, principal.getUserId());
+		return new ResponseDto<>(1, "게시글 등록 성공", null);
+	}
 
 	// 블로그 전체 게시글 목록 페이지
 	@GetMapping("/post/listForm/{userId}")
@@ -156,7 +165,8 @@ public class PostController {
 	// 게시글 삭제 응답
 	@DeleteMapping("/post/delete/{postId}")
 	public @ResponseBody ResponseDto<?> delete(@PathVariable Integer postId) {
-		// postDao.delete(postId);
+		System.out.println("디버그 : ");
+		postRepository.delete(postId);
 		return new ResponseDto<>(1, "게시글 삭제 성공", null);
 	}
 
@@ -173,11 +183,11 @@ public class PostController {
 	// }
 
 	// 게시글 싫어요 응답
-	@DeleteMapping("/s/api/post/love/{postId}/{loveId}")
-	public @ResponseBody ResponseDto<?> deleteLove(@PathVariable Integer postId, @PathVariable Integer loveId) {
-		// postService.좋아요취소(loveId);
+	// @DeleteMapping("/s/api/post/love/{postId}/{loveId}")
+	// public @ResponseBody ResponseDto<?> deleteLove(@PathVariable Integer postId, @PathVariable Integer loveId) {
+	// 	postService.좋아요취소(loveId);
 
-		return new ResponseDto<>(1, "좋아요 취소 성공", null);
-	}
+	// 	return new ResponseDto<>(1, "좋아요 취소 성공", null);
+	// }
 
 }

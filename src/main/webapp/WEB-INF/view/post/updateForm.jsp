@@ -8,21 +8,21 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
 </style>
 <div class="container">
     <!-- 카테고리 목록 -->
-    <div class="form-group">
-        <select class="form-control" id="categoryId">
-            <option value="${post.categoryId}">${post.categoryTitle}</option>
+    <%-- <div class="form-group"> --%>
+        <%-- <select class="form-control" id="categoryId">
+            <option value="${post.categoryId}">${post.categoryTitle}</option> --%>
             
-            <c:forEach var="category" items="${titleList}"
+            <%-- <c:forEach var="category" items="${titleList}"
                 ><option value="${category.categoryId}">
                     ${category.categoryTitle}
                 </option>
-            </c:forEach>
-        </select>
+            </c:forEach> --%>
+        <%-- </select> --%>
 
-        <input type="hidden" id="userId" value="${principal.userId}" />
+        <%-- <input type="hidden" id="userId" value="${principal.userId}" />
         <input type="hidden" id="postId" value="${post.postId}" />
         <input type="hidden" id="noFile" value="${post.postThumnail}">
-    </div>
+    </div> --%>
 
     <input
         type="text"
@@ -35,12 +35,12 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
 ${post.postContent}</textarea
         >
     </div>
-    <div class="form-control d-flex justify-content-end">
-        <div>
+    <%-- <div class="form-control d-flex justify-content-end"> --%>
+        <%-- <div>
             섬네일 사진 등록 :
             <input type="file" id="file"/>
-        </div>
-    </div>
+        </div> --%>
+    <%-- </div> --%>
     <div  style="display: flex;justify-content: right;">
     <button type="submit" class="my_active_btn" id="updateBtn">수정완료</button></div>
     <br />

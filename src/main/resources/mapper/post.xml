@@ -4,7 +4,12 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop.mtcoding.tstory.model.post.PostRepository">
 
- 	
+ 	<select id="findByIdUpdate" resultType="shop.mtcoding.tstory.dto.post.PostUpdateReqDto">
+          SELECT c.category_id, c.category_title, p.post_id, p.post_title, p.post_content, p.post_thumnail, p.user_id
+		  FROM category c left JOIN post p ON c.user_id = p.user_id
+		  WHERE c.user_id = #{userId} AND c.category_id = #{categoryId} AND p.post_id = #{postId}
+    </select>
+
 	<select id="findAllAndUsername" resultType="shop.mtcoding.tstory.dto.post.PostAllRespDto">
         SELECT u.user_id, p.post_id, u.username, p.post_title, p.post_thumnail, p.created_at, u.nickname
 		FROM post_tb p LEFT JOIN  user_tb u ON p.user_id = u.user_id
@@ -59,5 +64,15 @@
 		ON p.user_id = u.user_id
 		WHERE p.post_id = #{postId}
     </select>
+
+	<insert id="insertSave">
+		INSERT
+		INTO post_tb(post_title, post_content, user_id, updated_at, created_at)
+		VALUES(#{postTitle}, #{postContent}, #{userId}, now(), now())
+	</insert>
+
+	
+  
+
 
 </mapper>

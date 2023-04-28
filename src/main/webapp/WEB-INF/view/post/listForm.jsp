@@ -3,7 +3,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
 
 <div class="container">
     <div class="d-flex justify-content-end my_mb_sm_1">
-        <a href="/write/post/1" class="my_atag_none">
+        <a href="/post/writeForm" class="my_atag_none">
             <div
                 class="my_icon_rounded_btn d-flex justify-content-center align-items-center"
             >

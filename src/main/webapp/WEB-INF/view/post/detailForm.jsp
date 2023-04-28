@@ -17,7 +17,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
         </div>
         </c:when>
         <c:otherwise>
- <div  >
+        <div  >
         작성자:<a href="/post/listForm/${post.userId}"> ${user.nickname}</a>&nbsp;&nbsp;
                 최근 수정일: ${post.updatedAt}
         </div>
@@ -28,12 +28,12 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
         <c:if test="${principal.userId==post.userId}">
             <a
                 class="btn btn-outline-warning"
-                href="/s/api/post/updateForm/${post.categoryId}/${post.postId}"
+                href="/post/updateForm/${post.postId}"
                 style="height:38px;width: 58px;"
                 >수정</a
             >
             <form>
-                <button id="btnDelete" onclick="removeCheck()" class="btn btn-outline-danger">
+                <button id="btnDelete" onclick="remove()" class="btn btn-outline-danger">
                     삭제
                 </button>
             </form>
@@ -49,42 +49,35 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
 
         <input id="postId" type="hidden" value="${post.postId}" />
         <input id="userId" type="hidden" value="${post.userId}" />
-        <%-- <input id="loveId" type="hidden" value="${post.loveId}" /> --%>
-    
-<%-- <div class="d-flex justify-content-between">
-		<div>
-			공감 <i id="iconLove"
-				class='${post.loved ? "fa-solid" : "fa-regular"} fa-heart my_pointer my_red'></i> <span id="countLove">${post.loveCount}</span>
-		</div>
-	</div> --%>
-
-    </div>
-    <hr>
-    <!-- 라이브리 시티 설치 코드 -->
-    <%-- <div id="lv-container" data-id="city" data-uid="MTAyMC81NzY3MS8zNDEzNA==">
-        <script type="text/javascript">
-            (function (d, s) {
-                var j,
-                    e = d.getElementsByTagName(s)[0];
-
-                if (typeof LivereTower === "function") {
-                    return;
-                }
-
-                j = d.createElement(s);
-                j.src = "https://cdn-city.livere.com/js/embed.dist.js";
-                j.async = true;
-
-                e.parentNode.insertBefore(j, e);
-            })(document, "script");
-        </script>
-        <noscript>
-            라이브리 댓글 작성을 위해 JavaScript를 활성화 해주세요</noscript
-        >
-    </div> --%>
-    <!-- 시티 설치 코드 끝 -->
+      
     <br />
 </div>
+<script>
+	
+    
+function remove() {
+    let postId = $("#postId").val();
+
+    if(confirm("작성하신 게시글이 삭제됩니다. 정말 삭제하시겠습니까?")==true){ 
+      $.ajax({
+        type: "Delete",
+        url: `/post/delete/${postId}`,
+		dataType: "json", // 응답 데이터
+		ContentType: "application/json",
+	}).done((res) => {
+		if (res.code == 1) {
+            alert("게시글삭제가 완료되었습니다.");
+            location.href = "/";
+		} else {
+            alert("경로가 올바르지 않습니다.");
+        }
+	});}
+}
+
+
+
+
+</script>
 
 <script src="/js/post/detail.js"></script>
 <%@ include file="../layout/footer.jsp"%>
