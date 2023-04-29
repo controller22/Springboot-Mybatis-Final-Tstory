@@ -4,6 +4,15 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop.mtcoding.tstory.model.post.PostRepository">
 
+	<select id="findAllPost" resultType="shop.mtcoding.tstory.dto.post.PostAllRespDto">
+          SELECT p.post_id, p.post_title, u.username, u.user_id, p.post_thumnail, p.category_id, p.created_at, u.nickname
+		  FROM post_tb p
+		  INNER JOIN user_tb u
+		  ON p.user_id = u.user_id
+		  WHERE p.user_id = #{userId}
+		  ORDER BY p.post_id DESC
+    </select>
+
 
     <select id="findByIdUpdate" resultType="shop.mtcoding.tstory.dto.post.PostUpdateReqDto">
           SELECT post_id, post_title, post_content, post_thumnail, user_id

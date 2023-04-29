@@ -36,5 +36,7 @@ public interface PostRepository {
 
     public PostUpdateReqDto findByIdUpdate(@Param("postId") Integer postId, @Param("userId") Integer userId);
 
+    public List<PostAllRespDto> findAllPost(Integer userId);
+
 
 }

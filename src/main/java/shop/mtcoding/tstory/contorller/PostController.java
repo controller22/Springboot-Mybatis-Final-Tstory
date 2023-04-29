@@ -1,5 +1,7 @@
 package shop.mtcoding.tstory.contorller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.tstory.dto.ResponseDto;
+import shop.mtcoding.tstory.dto.post.PostAllRespDto;
 import shop.mtcoding.tstory.dto.post.PostDetailDto;
 import shop.mtcoding.tstory.dto.post.PostSaveReqDto;
 import shop.mtcoding.tstory.dto.post.PostUpdateReqDto;
@@ -83,40 +86,13 @@ public class PostController {
 
 	// 블로그 전체 게시글 목록 페이지
 	@GetMapping("/post/listForm/{userId}")
-	public String list(@PathVariable Integer userId, Integer page, Model model, String keyword) {
-		// User principal = (User) session.getAttribute("principal");
-
-		// if (page == null) {
-		// 	page = 0;
-		// }
-
-		// Integer startNum = page * 5;
-
-		// if (keyword == null || keyword.isEmpty()) {
-		// 	PagingDto paging = postDao.paging(page, userId, null);
-		// 	paging.makeBlockInfo();
-
-		// 	model.addAttribute("postCount", postDao.postCount(userId, null)); // 전체게시글 개수
-		// 	model.addAttribute("paging", paging); // 페이징
-		// 	model.addAttribute("postList", postDao.findAllPost(userId, null, startNum)); // 블로그 전체게시글
-		// 	model.addAttribute("categoryList", categoryDao.findByUserId(userId)); // 사이드바 카테고리 이동 => 공통
-		// 	model.addAttribute("user", userDao.findById(userId));
-		// }
+	public String list(@PathVariable Integer userId, Model model) {
+		User principal = (User) session.getAttribute("principal");
 
 		// if (principal != null) {
-
-		// 	Integer subscribeId = subscribeService.구독Id불러오기(principal.getUserId(), userId); // 구독 하는 사람, 구독 받는 사람
-		// 	model.addAttribute("subscribeId", subscribeId);
-
-		// 	List<PostAllDto> postList = postDao.findAllPost(userId, keyword, startNum);
-		// 	model.addAttribute("postList", postList); // 블로그 전체게시글
-		// 	PagingDto paging = postDao.paging(page, userId, keyword);
-		// 	paging.makeBlockInfoByPostAll(keyword);
-		// 	model.addAttribute("postCount", postDao.postCount(userId, keyword)); // 전체게시글 개수
-		// 	model.addAttribute("paging", paging); // 페이징
-		// 	model.addAttribute("categoryList", categoryDao.findByUserId(userId)); // 사이드바 카테고리 이동 => 공통
-		// 	model.addAttribute("user", userDao.findById(userId));
-
+			List<PostAllRespDto> postList = postRepository.findAllPost(userId);
+			model.addAttribute("postList", postList); // 블로그 전체게시글
+			model.addAttribute("user", userRepository.findById(userId));
 		// }
 
 		// else {
@@ -127,11 +103,12 @@ public class PostController {
 		// 	model.addAttribute("postCount", postDao.postCount(userId, keyword)); // 전체게시글 개수
 		// 	model.addAttribute("paging", paging); // 페이징
 		// 	model.addAttribute("categoryList", categoryDao.findByUserId(userId)); // 사이드바 카테고리 이동 => 공통
+		// 	model.addAttribute("visit", visitDao.findByVisitCount(userId));
 
 		// }
-
 		return "/post/listForm";
 	}
+
 
 	// 게시글 상세보기 페이지
 	@GetMapping("/post/detailForm/{postId}/{userId}")
