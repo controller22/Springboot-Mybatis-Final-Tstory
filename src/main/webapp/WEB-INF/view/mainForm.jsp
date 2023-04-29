@@ -6,7 +6,7 @@ pageEncoding="UTF-8"%> <%@ include file="layout/main-header.jsp"%>
 <div class="form-group row justify-content-center">
     
     <div class="d-flex justify-content-end" >
-		<div style="width: 1300px">
+		<div style="width: 100%">
 			<form style="display: inline-flex" method="get" action="/">
 				<input style="width: 1280px;" class="my_auth_form_box_input" type="text" name="keyword">
 				<button class="btn btn-sm btn-light" type="submit">

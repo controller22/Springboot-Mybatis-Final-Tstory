@@ -1,107 +1,128 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
-<style>
-    .ql-editor {
-        min-height: 40vh;
-    }
-</style>
 
 <div class="container">
-    <form
-        id="hello"
-        action=""
-        method=""
-        enctype="multipart/form-data"
-        onsubmit="return getQuill()"
-    >
-        <div class="form-group">
-            <select class="form-control" name="categoryId">
-                <option value="">제목</option>
-            </select>
-        </div>
-        <input
-            type="text"
-            placeholder="Enter Title"
-            name="title"
-            class="form-control"
-        />
+    <!-- 카테고리 목록 -->
+    <div class="form-group">
+        <select class="form-control" id="categoryId">
+            <c:forEach var="category" items="${titleList}">
+                <option value="${category.categoryId}">
+                    ${category.categoryTitle}
+                </option>
+            </c:forEach>
+        </select>
 
-        <div id="toolbar-container">
-            <span class="ql-formats">
-                <select class="ql-font"></select>
-                <select class="ql-size"></select>
-            </span>
-            <span class="ql-formats">
-                <button class="ql-bold"></button>
-                <button class="ql-italic"></button>
-                <button class="ql-underline"></button>
-                <button class="ql-strike"></button>
-            </span>
-            <span class="ql-formats">
-                <select class="ql-color"></select>
-                <select class="ql-background"></select>
-            </span>
-            <span class="ql-formats">
-                <button class="ql-script" value="sub"></button>
-                <button class="ql-script" value="super"></button>
-            </span>
-            <span class="ql-formats">
-                <button class="ql-header" value="1"></button>
-                <button class="ql-header" value="2"></button>
-                <button class="ql-blockquote"></button>
-            </span>
-            <span class="ql-formats">
-                <button class="ql-list" value="ordered"></button>
-                <button class="ql-list" value="bullet"></button>
-                <button class="ql-indent" value="-1"></button>
-                <button class="ql-indent" value="+1"></button>
-            </span>
-            <span class="ql-formats">
-                <button class="ql-direction" value="rtl"></button>
-                <select class="ql-align"></select>
-            </span>
-            <span class="ql-formats">
-                <button class="ql-link"></button>
-                <button class="ql-image"></button>
-                <button class="ql-video"></button>
-            </span>
-            <span class="ql-formats">
-                <button class="ql-clean"></button>
-            </span>
-        </div>
+        <input type="hidden" id="userId" value="${principal.userId}" />
+    </div>
 
-        <div id="editor-container"></div>
-        <textarea name="content" id="content" class="my_hidden"> </textarea>
-        <div class="form-control d-flex justify-content-end">
-            <div>
-                섬네일 사진 등록 : <input type="file" name="thumnailFile" />
-            </div>
+    <input
+        type="text"
+        placeholder="제목을 입력하세요"
+        id="postTitle"
+        class="form-control"
+    />
+    <div class="mb-3">
+        <textarea class="form-control" rows="8" id="postContent"></textarea>
+    </div>
+    <%-- <div class="form-control d-flex justify-content-left">
+        <div>
+            섬네일 사진 등록 :
+            <input type="file" id="file" accept="image/*" />
         </div>
-        <button type="submit" class="my_active_btn">글쓰기 등록</button>
-    </form>
+    </div> --%>
+    <div  style="display: flex;justify-content: right;">
+    <button type="button" class="my_active_btn" id="writeBtn">
+        글쓰기 등록
+    </button></div>
     <br />
 </div>
 
 <script>
-    function getQuill() {
-        let quillContent = $("#editor-container .ql-editor").html();
-        $("#content").html(quillContent);
-        return true;
-    }
+	$('#postContent').summernote({
+		height : 400
+	});
 </script>
-
-<!-- Include the Quill library -->
-<!-- <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script> -->
-
 <script>
-    var quill = new Quill("#editor-container", {
-        modules: {
-            formula: true,
-            syntax: true,
-            toolbar: "#toolbar-container",
-        },
-        placeholder: "게시물을 작성해주세요.",
-        theme: "snow",
+    $("#writeBtn").click(() => {
+        write();
     });
+
+    function write() {
+
+        let postContent = $("#postContent").val();
+        let postTitle = $("#postTitle").val();
+
+        if (postTitle.length<1) {
+            alert("제목을 입력해주셔야 합니다.");
+            return;
+        }
+
+        if (postContent.length<1) {
+            alert("내용을 입력해주셔야 합니다.");
+            return;
+        }
+
+        // if ($("#file")[0].files[0] == null) {
+             let data = {
+            // categoryId: $("#categoryId").val(),
+            userId: $("#userId").val(),
+            postTitle: $("#postTitle").val(),
+            postContent: $("#postContent").val(),
+        };
+
+        $.ajax("/post/write", {
+             type: "POST",
+            dataType: "json",
+            data: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).done((res) => {
+            if (res.code == 1) {
+                console.log("res");
+                alert("게시글이 등록되었습니다.");
+                location.href = "/";
+            } else {
+                alert("게시글 입력 정보를 다시 확인해주세요.");
+                return false;
+            }
+        });
+        }
+
+    
+        // let userId = $("#userId").val();
+
+        // let formData = new FormData();
+        // let data = {
+        //     categoryId: $("#categoryId").val(),
+        //     userId: $("#userId").val(),
+        //     postTitle: $("#postTitle").val(),
+        //     postContent: $("#postContent").val()
+        // };
+
+        // formData.append("file", $("#file")[0].files[0]);
+        // formData.append(
+        //     "postSaveDto",
+        //     new Blob([JSON.stringify(data)], { type: "application/json" })
+        // );
+
+        // $.ajax("/post/write", {
+        //     type: "POST",
+        //     data: formData,
+        //     processData: false, // 쿼리스트링 방지
+        //     contentType: false,
+        //     enctype: "multipart/form-data",
+        // }).done((res) => {
+        //     if (res.code == 1) {
+        //         console.log("asdasd");
+        //         alert("게시글이 등록되었습니다.");
+        //         location.href = "/post/listForm/"+userId;
+        //     } else {
+        //         alert("게시글 입력 정보를 다시 확인해주세요.");
+        //         return false;
+        //     }
+        // });
+
 </script>
+
 <%@ include file="../layout/footer.jsp"%>

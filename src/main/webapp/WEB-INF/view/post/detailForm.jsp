@@ -1,64 +1,83 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
+pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
 
 <div class="container">
-    <input id="postId" type="hidden" value="" />
-    <input id="pageOwnerId" type="hidden" value="" />
-    <input id="my-loveId" type="hidden" value="" />
-
     <div class="my_post_detail_title">
-        <h2>제목</h2>
+        <h2>${post.postTitle}</h2>
     </div>
-    <hr />
+    <br>
+    <div style="display: flex;" >
 
-    <div class="my_post_detail_content">내용</div>
-    <div class="my_post_info_box d-flex">
-        <div class="my_post_info">
-            <i
-                class="fa-solid fa-heart my_fake_like my_mr_sm_1"
-                onclick="postLikeClick()"
-            ></i>
-            <i
-                class="far fa-heart my_fake_un_like my_mr_sm_1"
-                id="my-heart"
-                onclick="postLikeClick()"
-            ></i>
+        
+        <c:choose>
+    <c:when test="${principal.userId==post.userId}">
+        <div style="line-height: 40px;">
+        작성자:<a href="/post/listForm/${post.userId}"> ${user.nickname}</a>&nbsp;&nbsp;
+                최근 수정일: ${post.updatedAt}
         </div>
-    </div>
-    <div class="my_mt_md_1">
-        <a class="btn btn-outline-success" href="#">수정</a>
-        <button id="btn-delete" class="btn btn-outline-danger">삭제</button>
-    </div>
-    <br />
+        </c:when>
+        <c:otherwise>
+        <div  >
+        작성자:<a href="/post/listForm/${post.userId}"> ${user.nickname}</a>&nbsp;&nbsp;
+                최근 수정일: ${post.updatedAt}
+        </div>
 
-    <div class="my_livere">
-        <!-- 라이브리 시티 설치 코드 -->
-        <!-- <div
-            id="lv-container"
-            data-id="city"
-            data-uid="MTAyMC81MTM0MC8yNzgyMQ=="
-        >
-            <script type="text/javascript">
-                (function (d, s) {
-                    var j,
-                        e = d.getElementsByTagName(s)[0];
-                    if (typeof LivereTower === "function") {
-                        return;
-                    }
-                    j = d.createElement(s);
-                    j.src = "https://cdn-city.livere.com/js/embed.dist.js";
-                    j.async = true;
-                    e.parentNode.insertBefore(j, e);
-                })(document, "script");
-            </script>
-            <noscript
-                >라이브리 댓글 작성을 위해 JavaScript를 활성화
-                해주세요</noscript
+        </c:otherwise>
+        </c:choose>
+        <div style="display: inline-flex; padding-left: 30px;">
+        <c:if test="${principal.userId==post.userId}">
+            <a
+                class="btn btn-outline-warning"
+                href="/post/updateForm/${post.postId}"
+                style="height:38px;width: 58px;"
+                >수정</a
             >
-        </div> -->
-        <!-- 시티 설치 코드 끝 -->
+            <form>
+                <button id="btnDelete" onclick="remove()" class="btn btn-outline-danger">
+                    삭제
+                </button>
+            </form>
+        </c:if>
     </div>
+    </div>
+    <hr><br>
+   
+
+    <div class="my_post_detail_content">${post.postContent}</div>
+
+    <div class="my_post_info_box d-flex" style="margin-top: 50px;">
+
+        <input id="postId" type="hidden" value="${post.postId}" />
+        <input id="userId" type="hidden" value="${post.userId}" />
+      
+    <br />
 </div>
+<script>
+	
+    
+function remove() {
+    let postId = $("#postId").val();
+
+    if(confirm("작성하신 게시글이 삭제됩니다. 정말 삭제하시겠습니까?")==true){ 
+      $.ajax({
+        type: "Delete",
+        url: `/post/delete/${postId}`,
+		dataType: "json", // 응답 데이터
+		ContentType: "application/json",
+	}).done((res) => {
+		if (res.code == 1) {
+            alert("게시글삭제가 완료되었습니다.");
+            location.href = "/";
+		} else {
+            alert("경로가 올바르지 않습니다.");
+        }
+	});}
+}
+
+
+
+
+</script>
 
 <script src="/js/post/detail.js"></script>
 <%@ include file="../layout/footer.jsp"%>

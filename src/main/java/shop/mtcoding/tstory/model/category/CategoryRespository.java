@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import shop.mtcoding.tstory.dto.user.CheckDto;
+
 @Mapper
 public interface CategoryRespository {
     public Category findById(Integer categoryId);
@@ -15,4 +17,8 @@ public interface CategoryRespository {
 	public void update(Category category);
 
 	public void delete(Category category);
+
+    public CheckDto findByCategoryTitle(String categoryTitle, Integer userId);
+
+    public void insertCategoryTitle(String categoryTitle, Integer userId);
 }

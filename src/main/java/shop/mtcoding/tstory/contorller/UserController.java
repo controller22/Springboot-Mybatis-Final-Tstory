@@ -57,7 +57,7 @@ public class UserController {
             session.setAttribute("principal", userPS);
             return "redirect:/";
         } else {
-            return "redirect:/user/loginForm";
+            return "redirect:/loginForm";
         }
     }
 

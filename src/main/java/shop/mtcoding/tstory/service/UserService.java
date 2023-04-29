@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.tstory.dto.user.CheckDto;
 import shop.mtcoding.tstory.dto.user.JoinDto;
+import shop.mtcoding.tstory.model.category.CategoryRespository;
 import shop.mtcoding.tstory.model.user.User;
 import shop.mtcoding.tstory.model.user.UserRepository;
 import shop.mtcoding.tstory.util.SHA256;
@@ -18,7 +19,7 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final HttpSession session;
 	// private final JavaMailSender mailSender;
-	// private final CategoryDao categoryDao;
+	private final CategoryRespository categoryRespository;
 	private final SHA256 sha256;
 
 	// @Transactional
@@ -58,4 +59,15 @@ public class UserService {
 			return true;
 		}
 	}
+
+    public boolean 카테고리명중복확인(String categoryTitle, Integer userId) {
+		System.out.println("디버그");
+		CheckDto categoryPS = categoryRespository.findByCategoryTitle(categoryTitle, userId);
+		System.out.println("디버그");
+		if (categoryPS == null) { // 중복 안됨
+			return false;
+		} else { // 중복됨
+			return true;
+		}
+    }
 }

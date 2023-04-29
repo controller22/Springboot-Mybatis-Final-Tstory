@@ -6,8 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
+import shop.mtcoding.tstory.dto.ResponseDto;
+import shop.mtcoding.tstory.dto.category.InsertCategoryTitleReqDto;
+import shop.mtcoding.tstory.dto.user.CheckDto;
 import shop.mtcoding.tstory.model.category.CategoryRespository;
 import shop.mtcoding.tstory.model.post.PostRepository;
 import shop.mtcoding.tstory.model.user.User;
@@ -16,9 +22,9 @@ import shop.mtcoding.tstory.model.user.UserRepository;
 @RequiredArgsConstructor
 @Controller
 public class CategoryController {
-	private final CategoryRespository categoryDao;
-	private final PostRepository postDao;
-	private final UserRepository userDao;
+	private final CategoryRespository categoryRespository;
+	private final PostRepository postRepository;
+	private final UserRepository userRepository;
 	private final HttpSession session;
 
 	// 카테고리 등록 페이지
@@ -26,19 +32,36 @@ public class CategoryController {
 	public String writeForm(Model model) {
 		User principal = (User) session.getAttribute("principal");
 		if (principal == null) {
-			return "redirect:/user/loginForm";
+			return "redirect:/loginForm";
 		}
 		model.addAttribute("principal", principal);
+		model.addAttribute("user", userRepository.findById(principal.getUserId()));
+		model.addAttribute("userImg", userRepository.findById(principal.getUserId()));
+	
 		return "/category/writeForm";
 	}
 
 	// 카테고리 등록 응답
-	// @PostMapping("/category/write")
-	// public String write(String categoryTitle) {
-	// 	User principal = (User) session.getAttribute("principal");
-	// 	categoryDao.insertCategoryTitle(categoryTitle, principal.getUserId());
-	// 	return "redirect:/";
-	// }
+	@PostMapping("/category/write")
+	public @ResponseBody ResponseDto<?> write(@RequestBody InsertCategoryTitleReqDto insertCategoryTitleReqDto, Model model) {
+		User principal = (User) session.getAttribute("principal");
+		System.out.println("디버그 1 :"+insertCategoryTitleReqDto.getCategoryTitle());
+		System.out.println("디버그 1 :"+insertCategoryTitleReqDto.getCategoryId());
+		System.out.println("디버그 1 :"+insertCategoryTitleReqDto.getUserId());
+		if (principal != null) {
+			model.addAttribute("user", userRepository.findById(principal.getUserId()));
+		}
+		CheckDto categoryPS = categoryRespository.findByCategoryTitle(insertCategoryTitleReqDto.getCategoryTitle(),
+		principal.getUserId());
+		System.out.println("디버그 2 :");
+		if (categoryPS != null) {
+			return new ResponseDto<>(-1, "실패", null);
+
+		}
+		categoryRespository.insertCategoryTitle(insertCategoryTitleReqDto.getCategoryTitle(), principal.getUserId());
+		return new ResponseDto<>(1, "성공", null);
+	}
+
 
 	// 블로그 카테고리별 게시글 목록 페이지
 	@GetMapping("/category/listForm/{categoryId}/{userId}")

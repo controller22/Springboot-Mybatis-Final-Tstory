@@ -97,7 +97,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                             <div class="dropdown-menu">
                                 <a
                                     class="dropdown-item"
-                                    href="/s/api/subscribe/listForm"
+                                    href="/subscribe/listForm"
                                     >구독관리</a
                                 >
                                 <a
@@ -107,12 +107,12 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                 >
                                 <a
                                     class="dropdown-item"
-                                    href="/s/api/user/passwordCheckForm"
+                                    href="/user/passwordCheckForm"
                                     >계정관리</a
                                 >
                                 <a
                                     class="dropdown-item"
-                                    href="/s/api/category/writeForm"
+                                    href="/category/writeForm"
                                     >카테고리등록</a
                                 >
 <c:choose>
@@ -124,7 +124,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                 >
                                  </c:when>
                                  </c:choose>
-                                <a class="dropdown-item" href="/user/logout"
+                                <a class="dropdown-item" href="/logout"
                                     >로그아웃</a
                                 >
                             </div>
@@ -138,7 +138,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                             <div class="dropdown-menu">
                                 <a
                                     class="dropdown-item"
-                                    href="/s/api/subscribe/listForm"
+                                    href="/subscribe/listForm"
                                     >구독관리</a
                                 >
                                 <a
@@ -148,12 +148,12 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                 >
                                 <a
                                     class="dropdown-item"
-                                    href="/s/api/user/passwordCheckForm"
+                                    href="/passwordCheckForm"
                                     >계정관리</a
                                 >
                                 <a
                                     class="dropdown-item"
-                                    href="/s/api/category/writeForm"
+                                    href="/category/writeForm"
                                     >카테고리등록</a
                                 >
 <c:choose>
@@ -165,7 +165,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                 >
                                  </c:when>
                                  </c:choose>
-                                <a class="dropdown-item" href="/user/logout"
+                                <a class="dropdown-item" href="/logout"
                                     >로그아웃</a
                                 >
                             </div>
@@ -175,7 +175,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     </c:when>
     <c:otherwise>
            <div>
-                <a class="my_main_start_btn" href="/user/loginForm">시작하기</a>
+                <a class="my_main_start_btn" href="/loginForm">시작하기</a>
             </div>
     </c:otherwise>
 </c:choose>
