@@ -83,8 +83,4 @@
 		VALUES(#{postTitle}, #{postContent}, #{userId}, now(), now())
 	</insert>
 
-	
-  
-
-
 </mapper>

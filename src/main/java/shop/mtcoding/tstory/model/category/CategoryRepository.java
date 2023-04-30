@@ -3,11 +3,12 @@ package shop.mtcoding.tstory.model.category;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import shop.mtcoding.tstory.dto.user.CheckDto;
 
 @Mapper
-public interface CategoryRespository {
+public interface CategoryRepository {
     public Category findById(Integer categoryId);
 
 	public List<Category> findAll();
@@ -18,7 +19,7 @@ public interface CategoryRespository {
 
 	public void delete(Category category);
 
-    public CheckDto findByCategoryTitle(String categoryTitle, Integer userId);
+    public void insertCategoryTitle(@Param("categoryTitle") String categoryTitle,@Param("userId") Integer userId);
 
-    public void insertCategoryTitle(String categoryTitle, Integer userId);
+    public CheckDto findByCategoryTitle(@Param("categoryTitle") String categoryTitle, @Param("userId") Integer userId);
 }
