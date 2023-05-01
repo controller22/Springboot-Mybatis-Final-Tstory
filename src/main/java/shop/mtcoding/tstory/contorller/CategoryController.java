@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,37 +67,24 @@ public class CategoryController {
 
 	// 블로그 카테고리별 게시글 목록 페이지
 	@GetMapping("/category/listForm/{categoryId}/{userId}")
-	public String listForm(@PathVariable Integer categoryId, @PathVariable Integer userId, Model model, Integer page,
-			String keyword) {
-		// if (page == null) {
-		// 	page = 0;
-		// }
-		// Integer startNum = page * 5;
-
-		// if (keyword == null || keyword.isEmpty()) {
-		// 	PagingDto paging = postDao.pagingByCategory(page, userId, categoryId, null);
-		// 	paging.makeBlockInfo();
-
-		// 	model.addAttribute("postList", postDao.findPost(categoryId, userId, startNum, null));
-		// 	model.addAttribute("categoryCount", postDao.categoryCount(categoryId, null)); // 카테고리내 게시글 개수
-		// 	model.addAttribute("paging", paging); // 페이징
-		// 	model.addAttribute("category", categoryDao.findById(categoryId)); // 카테고리 제목 표시
-		// 	model.addAttribute("categoryList", categoryDao.findByUserId(userId));
-		// 	model.addAttribute("user", userDao.findById(userId)); // 사이드바 카테고리 이동 => 공통
-		// } else {
-
-		// 	List<PostAllDto> postList = postDao.findPost(categoryId, userId, startNum, keyword);
-		// 	PagingDto paging = postDao.pagingByCategory(page, userId, categoryId, keyword);
-		// 	paging.makeBlockInfoByCategoryPostAll(keyword);
-
-		// 	model.addAttribute("postList", postList);
-		// 	model.addAttribute("categoryCount", postDao.categoryCount(categoryId, keyword)); // 카테고리내 게시글 개수
-		// 	model.addAttribute("paging", paging); // 페이징
-		// 	model.addAttribute("category", categoryDao.findById(categoryId)); // 카테고리 제목 표시
-		// 	model.addAttribute("categoryList", categoryDao.findByUserId(userId));
-		// 	model.addAttribute("user", userDao.findById(userId)); // 사이드바 카테고리 이동 => 공통
-		// }
-
+	public String listForm(@PathVariable Integer categoryId, @PathVariable Integer userId, Model model) {
+		System.out.println("디버그 : "+userId );
+		System.out.println("디버그 : "+categoryId );
+		User principal = (User) session.getAttribute("principal");
+		if (principal != null) {
+			model.addAttribute("user", userRepository.findById(principal.getUserId()));
+		}
+		model.addAttribute("postList", postRepository.findPost(categoryId, userId));
+		model.addAttribute("category", categoryRepository.findById(categoryId)); // 카테고리 제목 표시
+		model.addAttribute("categoryList", categoryRepository.findByUserId(userId));
+		model.addAttribute("user", userRepository.findById(userId)); // 사이드바 카테고리 이동 => 공통
+		
 		return "/category/listForm";
+	}
+
+	@DeleteMapping("/category/{categoryId}")
+		public @ResponseBody ResponseDto<?> delete(@PathVariable Integer categoryId) {
+		categoryRepository.delete(categoryId);
+		return new ResponseDto<>(1, "게시글 삭제 성공", null);
 	}
 }

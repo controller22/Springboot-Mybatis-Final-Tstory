@@ -18,4 +18,9 @@ INSERT INTO post_tb(post_title, post_content, post_thumnail, user_id, category_i
 INSERT INTO post_tb(post_title, post_content, post_thumnail, user_id, category_id, updated_at, created_at) VALUES('영화 리뷰 : 스즈메의 문단속','히히히','스즈메.jpeg', '1','1',NOW(), NOW());
 INSERT INTO post_tb(post_title, post_content, post_thumnail, user_id, category_id, updated_at, created_at) VALUES('영화 리뷰 : 스즈메의 문단속','히히히','스즈메.jpeg', '1','1',NOW(), NOW());
 INSERT INTO post_tb(post_title, post_content, post_thumnail, user_id, category_id, updated_at, created_at) VALUES('영화 리뷰 : 스즈메의 문단속','히히히','스즈메.jpeg', '1','1',NOW(), NOW());
-INSERT INTO post_tb(post_title, post_content, post_thumnail, user_id, category_id, updated_at, created_at) VALUES('영화 리뷰 : 스즈메의 문단속','히히히','스즈메.jpeg', '1','1',NOW(), NOW());
+INSERT INTO post_tb(post_title, post_content, post_thumnail, user_id, category_id, updated_at, created_at) VALUES('영화 리뷰11 : 스즈메의 문단속','히히히','스즈메.jpeg', '1','2',NOW(), NOW());
+
+
+  
+INSERT INTO category_tb(category_title, user_id, updated_at, created_at) VALUES('anime','1', NOW(), NOW());
+INSERT INTO category_tb(category_title, user_id, updated_at, created_at) VALUES('love','2', NOW(), NOW());

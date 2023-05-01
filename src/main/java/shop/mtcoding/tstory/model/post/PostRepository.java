@@ -35,5 +35,7 @@ public interface PostRepository {
 
     public List<PostAllRespDto> findAllPost(Integer userId);
 
+    public List<PostAllRespDto> findPost(@Param("categoryId") Integer categoryId,@Param("userId") Integer userId);
+
 
 }
