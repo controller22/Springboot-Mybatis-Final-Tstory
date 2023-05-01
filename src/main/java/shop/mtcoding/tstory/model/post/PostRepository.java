@@ -2,15 +2,12 @@ package shop.mtcoding.tstory.model.post;
 
 import java.util.List;
 
-import javax.print.DocFlavor.STRING;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import shop.mtcoding.tstory.dto.main.KeywordRespDto;
 import shop.mtcoding.tstory.dto.post.PostAllRespDto;
 import shop.mtcoding.tstory.dto.post.PostDetailDto;
-import shop.mtcoding.tstory.dto.post.PostSaveReqDto;
 import shop.mtcoding.tstory.dto.post.PostUpdateReqDto;
 
 
@@ -37,6 +34,8 @@ public interface PostRepository {
     public PostUpdateReqDto findByIdUpdate(@Param("postId") Integer postId, @Param("userId") Integer userId);
 
     public List<PostAllRespDto> findAllPost(Integer userId);
+
+    public List<PostAllRespDto> findPost(@Param("categoryId") Integer categoryId,@Param("userId") Integer userId);
 
 
 }

@@ -20,7 +20,7 @@ import shop.mtcoding.tstory.dto.post.PostAllRespDto;
 import shop.mtcoding.tstory.dto.post.PostDetailDto;
 import shop.mtcoding.tstory.dto.post.PostSaveReqDto;
 import shop.mtcoding.tstory.dto.post.PostUpdateReqDto;
-import shop.mtcoding.tstory.model.category.CategoryRespository;
+import shop.mtcoding.tstory.model.category.CategoryRepository;
 import shop.mtcoding.tstory.model.post.PostRepository;
 import shop.mtcoding.tstory.model.user.User;
 import shop.mtcoding.tstory.model.user.UserRepository;
@@ -34,7 +34,7 @@ public class PostController {
 	private final PostService postService;
 	private final PostRepository postRepository;
 	private final UserRepository userRepository;
-	private final CategoryRespository categoryRespository;
+	private final CategoryRepository categoryRespository;
 	private final SubscribeService subscribeService;
 
 	// 게시글 수정하기 페이지

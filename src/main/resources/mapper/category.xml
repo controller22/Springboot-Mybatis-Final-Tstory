@@ -4,11 +4,28 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop.mtcoding.tstory.model.category.CategoryRepository">
 
-	<select id="findByCategoryTitle"  resultType="shop.mtcoding.tstory.dto.user.CheckDto">
-        SELECT category_title
+	<select id="findByCategoryTitleId" resultType="shop.mtcoding.tstory.model.category.Category">
+        SELECT *
 		FROM category_tb
-		WHERE category_title = #{categoryTitle} AND user_id = #{userId}
+		WHERE user_id = #{userId} AND category_id = #{categoryId}
     </select>
+
+	<select id="findByUserId"
+		resultType="shop.mtcoding.tstory.dto.main.HeaderRespDto">
+		SELECT *
+		FROM user_tb u 
+		LEFT JOIN category_tb c
+		ON u.user_id = c.user_id
+		WHERE u.user_id=#{userId}
+	</select>
+	
+	<select id="findByCategoryTitle"
+		resultType="shop.mtcoding.tstory.dto.user.CheckDto">
+		SELECT * 
+		FROM category_tb 
+		WHERE category_title=#{categoryTitle} and user_id=#{userId}
+	</select>
+	
 
 	<select id="findById"
 		resultType="shop.mtcoding.tstory.model.category.Category">
@@ -38,6 +55,12 @@
           UPDATE category_tb
 		  SET category_title = #{categoryTitle},
 		  user_id = #{userId}
+    </update>
+
+	<update id="updateCategoryTitle">
+        UPDATE category_tb
+		SET category_title = #{categoryTitle}
+		WHERE user_id = #{userId} AND category_id=#{categoryId}
     </update>
 
 	<delete id="delete">

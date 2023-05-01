@@ -8,7 +8,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
     <h5 style="line-height: 50px;">${category.categoryTitle}(${categoryCount.categoryCount})</h5></div>
     <c:if test="${principal.userId==category.userId}">
  <span class="btn_form">
-    <a href="/s/api/category/updateForm/${category.categoryId}">
+    <a href="/category/updateForm/${category.categoryId}">
         
          <span class="btn_form_update">
              <button id="btnUpdate" class="btn btn-outline-warning">수정</button></a>
@@ -79,7 +79,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
         </c:forEach>
  
         <!-- 페이지 -->
-        <div class="d-flex justify-content-center">
+        <%-- <div class="d-flex justify-content-center">
 		<ul class="pagination">
 			<li class='page-item ${paging.first ? "disabled" : ""}'><a style="color: black;" class="page-link"
 				href="?page=${paging.currentPage-1}&keyword=${paging.keyword}">이전</a></li>
@@ -92,7 +92,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
 			<li class='page-item ${paging.last ? "disabled" : ""}'><a style="color: black;" class="page-link"
 				href="?page=${paging.currentPage+1}&keyword=${paging.keyword}">다음</a></li>
 		</ul>
-	</div>
+	</div> --%>
     </div>
 </div>
 
@@ -107,7 +107,7 @@ function removeCheck() {
         categoryId: $("#categoryId").val()
     };
 
-    $.ajax("/s/api/category/" + categoryId, {
+    $.ajax("/category/" + categoryId, {
         type: "DELETE",
         dataType: "json",
         data: JSON.stringify(data),

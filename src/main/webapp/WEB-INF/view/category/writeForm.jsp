@@ -51,10 +51,10 @@ pageEncoding="UTF-8"%>
             return;
         }
 
-        // if (isCheckCategoryTitle == false) {
-        //     alert("이미 존재하는 카테고리명입니다.");
-        //     return;
-        // }
+        if (isCheckCategoryTitle == false) {
+            alert("이미 존재하는 카테고리명입니다.");
+            return;
+        }
 
         let data = {
             userId: $("#userId").val(),
@@ -80,35 +80,35 @@ pageEncoding="UTF-8"%>
         });
     }
 
-    // function checkCategoryTitle() {
-    //     let data = {
-    //         categoryTitle: $("#categoryTitle").val(),
-    //     };
+    function checkCategoryTitle() {
+        let data = {
+            categoryTitle: $("#categoryTitle").val(),
+        };
 
-    //     $.ajax("/check/categoryTitle", {
-    //         type: "POST",
-    //         dataType: "json",
-    //         data: JSON.stringify(data),
-    //         headers: {
-    //             "Content-Type": "application/json; charset=utf-8",
-    //         },
-    //     }).done((res) => {
-    //         if (res.code == 1) {
-    //             // 통신성공
-    //             if (res.data == true) {
-    //                 // 중복
-    //                 $(".categoryTitleValid").css("display", "inline-block");
-    //                 $(".categoryTitleValid").text(
-    //                     "이미 등록한 카테고리입니다."
-    //                 );
-    //                 isCheckCategoryTitle = false;
-    //             } else {
-    //                 isCheckCategoryTitle = true;
-    //                 return false;
-    //             }
-    //         }
-    //     });
-    // }
+        $.ajax("/check/categoryTitle", {
+            type: "POST",
+            dataType: "json",
+            data: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+        }).done((res) => {
+            if (res.code == 1) {
+                // 통신성공
+                if (res.data == true) {
+                    // 중복
+                    $(".categoryTitleValid").css("display", "inline-block");
+                    $(".categoryTitleValid").text(
+                        "이미 등록한 카테고리입니다."
+                    );
+                    isCheckCategoryTitle = false;
+                } else {
+                    isCheckCategoryTitle = true;
+                    return false;
+                }
+            }
+        });
+    }
 
     function validCategoryTitle() {
         let categoryTitle = $("#categoryTitle").val();
