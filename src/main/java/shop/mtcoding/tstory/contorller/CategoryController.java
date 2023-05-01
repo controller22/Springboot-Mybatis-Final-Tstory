@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.tstory.dto.ResponseDto;
 import shop.mtcoding.tstory.dto.category.InsertCategoryTitleReqDto;
+import shop.mtcoding.tstory.dto.category.UpdateCategoryTitleReqDto;
 import shop.mtcoding.tstory.dto.user.CheckDto;
 import shop.mtcoding.tstory.model.category.CategoryRepository;
 import shop.mtcoding.tstory.model.post.PostRepository;
@@ -87,4 +89,22 @@ public class CategoryController {
 		categoryRepository.delete(categoryId);
 		return new ResponseDto<>(1, "게시글 삭제 성공", null);
 	}
+
+	// 카테고리 수정 페이지
+	@GetMapping("/category/updateForm/{categoryId}")
+	public String updateForm(Model model, @PathVariable Integer categoryId) {
+		User principal = (User) session.getAttribute("principal");
+		model.addAttribute("user", userRepository.findById(principal.getUserId()));
+		model.addAttribute("category", categoryRepository.findByCategoryTitleId(categoryId, principal.getUserId()));
+		return "/category/updateForm";
+	}
+
+	// 카테고리명 수정 응답
+	@PutMapping("/user/categoryTitle")
+	public @ResponseBody ResponseDto<?> update(@RequestBody UpdateCategoryTitleReqDto updateCategoryTitleDto) {
+		categoryRepository.updateCategoryTitle(updateCategoryTitleDto.getCategoryTitle(), updateCategoryTitleDto.getUserId(),
+				updateCategoryTitleDto.getCategoryId());
+
+		return new ResponseDto<>(1, "성공", null);
+	} 
 }

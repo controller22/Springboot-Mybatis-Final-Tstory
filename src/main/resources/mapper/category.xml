@@ -4,6 +4,12 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop.mtcoding.tstory.model.category.CategoryRepository">
 
+	<select id="findByCategoryTitleId" resultType="shop.mtcoding.tstory.model.category.Category">
+        SELECT *
+		FROM category_tb
+		WHERE user_id = #{userId} AND category_id = #{categoryId}
+    </select>
+
 	<select id="findByUserId"
 		resultType="shop.mtcoding.tstory.dto.main.HeaderRespDto">
 		SELECT *
@@ -49,6 +55,12 @@
           UPDATE category_tb
 		  SET category_title = #{categoryTitle},
 		  user_id = #{userId}
+    </update>
+
+	<update id="updateCategoryTitle">
+        UPDATE category_tb
+		SET category_title = #{categoryTitle}
+		WHERE user_id = #{userId} AND category_id=#{categoryId}
     </update>
 
 	<delete id="delete">
