@@ -17,14 +17,14 @@
 					<td>${user.number}</td>
 					<td>${user.username}</td>
 					<td>${user.createdAt}</td>
-				 <td>
+				    <td>
                         <a href="" class="btn btn-warning">수정</a>
-                </td>
-                <td>
+                    </td>
+                    <td>
                         <input type="hidden" value="${user.userId}" id="userId">
                             <button class="btn btn-danger"  onclick="removeCheck()">삭제</button>
                         
-                </td>
+                    </td>
 				</tr></c:forEach>
 		</tbody>
 	</table></div>
@@ -32,21 +32,15 @@
 
 <script>
 function removeCheck() {
+    let userId = $("#userId").val();
+
 	if(confirm("정말 삭제하시겠습니까?")==true){ 
-		
-		let userId = $("#userId").val();
 
-        let data = {
-        userId: $("#userId").val()
-    };
-
-    $.ajax("/admin/" + userId+"/delete", {
-		type: "DELETE",
+    $.ajax({
+        type: "DELETE",
+        url: `/admin/${userId}/delete`,
         dataType: "json",
-        data: JSON.stringify(data),
-        headers: {
-            "Content-Type": "application/json; charset=utf-8",
-        },
+        ContentType: "application/json; charset=utf-8"
     }).done((res) => {
         if (res.code == 1) {
             alert("삭제되었습니다");

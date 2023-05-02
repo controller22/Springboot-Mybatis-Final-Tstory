@@ -28,4 +28,6 @@ public class User {
 		this.nickname = nickname;
 		this.email = email;
 	}
+
+	private Integer number;
 }

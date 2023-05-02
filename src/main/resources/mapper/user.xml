@@ -79,4 +79,18 @@
     </update>
 
 
+	<select id="findAllMember"
+		resultType="shop.mtcoding.tstory.model.user.User">
+		SELECT row_number() over(order BY u.user_id desc) as number, u.*
+    	FROM  user_tb u
+    	WHERE role = 'user'
+	</select>
+
+	<select id="findAllAdmin"
+		resultType="shop.mtcoding.tstory.model.user.User">
+		SELECT row_number() over(order BY u.user_id desc) as number, u.*
+    	FROM  user_tb u
+    	WHERE role = 'admin'
+	</select>
+
 </mapper>

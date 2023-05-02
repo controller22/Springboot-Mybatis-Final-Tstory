@@ -1,25 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
-
 <div class="container">
-  
-    <div class = "my_list" style="display: inline-flex;">
-<div class="my_list_category_form">
-    <h5 style="line-height: 50px;">${category.categoryTitle}(${categoryCount.categoryCount})</h5></div>
+  <div class="my_list" style="display: flex; align-items: center;">
+    <div class="my_list_category_form">
+      <h5 style="line-height: 50px;">${category.categoryTitle}(${categoryCount.categoryCount})</h5>
+    </div>
     <c:if test="${principal.userId==category.userId}">
- <span class="btn_form">
-    <a href="/category/updateForm/${category.categoryId}">
-        
-         <span class="btn_form_update">
-             <button id="btnUpdate" class="btn btn-outline-warning">수정</button></a>
-            
-    
-         <span class="btn_form_delete">
-            <button onclick="removeCheck()"  type="submit" class=" btn btn-outline-danger">
-                삭제</button>
-         </span>
+   <span class="btn_form" style="display: flex; align-items: center; margin-left: 10px; width: 200px;">
+  <a href="/category/updateForm/${category.categoryId}">
+    <span class="btn_form_update" style="display: inline-flex; align-items: center;">
+      <button id="btnUpdate" class="btn btn-outline-warning" style="display: inline-block; width: 100px;">수정</button>
+    </span>
+  </a>
+  <span class="btn_form_delete" style="display: inline-flex; align-items: center; margin-right: 10px;">
+    <button onclick="removeCheck()" type="submit" class="btn btn-outline-danger" style="display: inline-block; width: 100px; margin-right: 5px;">삭제</button>
+  </span>
 </span>
-</c:if>
+    </c:if>
     <input type="hidden" value="${category.categoryId}" id="categoryId">
      <!-- 검색바 -->
         <div class="form-group row justify-content-left" style="margin-left: 10px">
@@ -44,8 +41,8 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
          <!-- 게시글 작성 -->
          <div class="write_icon">
         <c:if test="${principal.userId == user.userId}">
-        <div class="d-flex justify-content-end my_mb_sm_1" style="padding-left: 600px;">
-        <a href="/s/api/post/writeForm" class="my_atag_none">
+        <div class="d-flex justify-content-end my_mb_sm_1" style="padding-left: 700px;">
+        <a href="/post/writeForm" class="my_atag_none">
                 <i class="fa-solid fa-pencil fa-2x" style="padding-top: 20px;"></i>
         </a>
     </div>
