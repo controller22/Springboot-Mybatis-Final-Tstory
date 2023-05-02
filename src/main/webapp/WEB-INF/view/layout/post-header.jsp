@@ -31,12 +31,14 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
         <!-- drawer.js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/drawer/3.2.2/js/drawer.min.js"></script>
+        
 
         <link rel="stylesheet" href="/css/styles.css" />
     </head>
 
+
     <body class="drawer drawer--left">
-        <div style="margin-bottom: 70px">
+        <div style="margin-bottom: 70px">    
             <nav class="drawer-nav my_nav_slider" role="navigation">
                 <ul class="drawer-menu">
                     <li><a class="drawer-brand" href="/">Home</a></li>
@@ -62,6 +64,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                     <i class="fa-solid fa-camera"></i>
                 </div>
             </nav>
+
+
 
             <nav class="navbar navbar-expand-sm my_navbar">
                 <!-- Links -->
@@ -115,7 +119,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                     href="/category/writeForm"
                                     >카테고리등록</a
                                 >
-<c:choose>
+                <c:choose>
                                 <c:when  test="${principal.role=='admin'}">
                                  <a
                                     class="dropdown-item"
@@ -129,7 +133,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                 >
                             </div>
                         </div> </c:when>
-              <c:otherwise>  <!-- 페이지 이동 -->
+                <c:otherwise>  <!-- 페이지 이동 -->
                         <div class="dropdown dropleft">
                             <div data-toggle="dropdown">
                                  <img id="profileImg"  src="/img/${userImg.profileImg}" style="width: 80px;height:80px;border-radius: 70%;"> <!-- 사진 사이즈 조절 -->
@@ -156,7 +160,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                     href="/category/writeForm"
                                     >카테고리등록</a
                                 >
-<c:choose>
+                                <c:choose>
                                 <c:when  test="${principal.role=='admin'}">
                                  <a
                                     class="dropdown-item"
@@ -187,5 +191,10 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         </ul> -->
             </nav>
         </div>
+        <script>
+  $(document).ready(function () {
+    $('.drawer').drawer();
+  });
+</script>
     </body>
 </html>
