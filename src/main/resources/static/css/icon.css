@@ -1,0 +1,26 @@
+.password_icon i {
+    color: rgb(100, 98, 98);
+    line-height: 60px;
+}
+
+.write_icon i {
+    position: absolute;
+    left: 77.5%;
+}
+
+.btn_form{
+    display: inline-flex;
+    line-height: 50px;
+}
+
+.btn_form_update{
+    width:60px;
+}
+
+.btn_form_delete{
+    width:60px;
+}
+
+.category_form{
+    width:100px;
+}

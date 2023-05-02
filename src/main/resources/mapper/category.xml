@@ -64,6 +64,7 @@
     </update>
 
 	<delete id="delete">
+		DELETE FROM post_tb WHERE category_id = #{categoryId};
 		DELETE FROM category_tb WHERE category_id = #{categoryId}
 	</delete>
 
