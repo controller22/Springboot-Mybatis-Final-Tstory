@@ -1,55 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
-
 <div class="container">
-    
-
-    <div style="display: inline-flex;">
-        <div style="width: 100px;"><h5 style="line-height: 50px;">전체글(${postCount.postCount})</h5></div>
-
-        <!-- 검색바 -->
-        <div
-            class="form-group row justify-content-left"
-            style="padding-left: 15px"
-        >
-            <div class="d-flex justify-content-end">
-                <div>
-                    <form style="display: inline-flex" method="get" action="/post/listForm/${user.userId}">
-                        <input
-                            style="width: 150px"
-                            class="my_auth_form_box_input"
-                            type="text"
-                            name="keyword"
-                        />
-                        <button class="btn btn-sm btn-light" type="submit">
-                            <i class="fa fa-search -retro fa-2x"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
+  <div class="d-flex justify-content-between align-items-center" style="width: 930px;">
+    <div class="d-flex align-items-center">
+      <div style="width: 100px;">
+        <h5 style="line-height: 50px;">전체글(${postCount.postCount})</h5>
+      </div>
+      <div class="form-group row justify-content-left" style="padding-left: 15px;">
+        <div class="d-flex justify-content-end">
+          <div>
+            <form style="display: inline-flex" method="get" action="/post/listForm/${user.userId}">
+              <input style="width: 150px" class="my_auth_form_box_input" type="text" name="keyword" />
+              <button class="btn btn-sm btn-light" type="submit"><i class="fa fa-search -retro fa-2x"></i></button>
+            </form>
+          </div>
         </div>
-
-         <!-- 구독 -->
-         <c:if test="${ principal.userId !=user.userId}">
-        <div  style="width: 80px; margin-left: 30px;">
-            <button id="subscribeBtn" class="${subscribeId !=null ?'blackBtn' : 'greyBtn'}">
-                                            ${subscribeId !=null ? '구독중': '구독'}
-                                        </button>
-        </div></c:if>
-
-       <!-- 게시글 작성 -->
-       <div class="write_icon" >
-        <c:if test="${principal.userId == user.userId}">
+      </div>
+      <c:if test="${ principal.userId !=user.userId}">
+        <div style="width: 80px; margin-left: 30px;">
+          <button id="subscribeBtn" class="${subscribeId !=null ?'blackBtn' : 'greyBtn'}">
+            ${subscribeId !=null ? '구독중': '구독'}
+          </button>
+        </div>
+      </c:if>
+    </div>
+    <div class="write_icon">
+      <c:if test="${principal.userId == user.userId}">
         <div class="d-flex justify-content-end my_mb_sm_1">
-        <a href="/post/writeForm" class="my_atag_none">
-               <i class="fa-solid fa-pencil fa-2x" style="padding-top: 20px;"></i>
-        </a>
+          <a href="/post/writeForm" class="my_atag_none">
+            <i class="fa-solid fa-pencil fa-2x" style="padding-top: 20px;"></i>
+          </a>
+        </div>
+      </c:if>
     </div>
-    </c:if></div>
 
     </div>
 
-    <div class="my_post_list">
+    <div class="my_post_list ">
         <c:forEach var="post" items="${postList}">
             <input id="usersId"  type="hidden" value="${post.userId}">
             <div class="my_post_list_item">
@@ -80,7 +67,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
         </c:forEach>
 
         <!-- 페이지 -->
-<%-- <div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center">
 		<ul class="pagination">
 			<li class='page-item ${paging.first ? "disabled" : ""}'><a style="color: black;" class="page-link"
 				href="?page=${paging.currentPage-1}&keyword=${paging.keyword}">이전</a></li>
@@ -93,7 +80,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
 			<li class='page-item ${paging.last ? "disabled" : ""}'><a style="color: black;" class="page-link"
 				href="?page=${paging.currentPage+1}&keyword=${paging.keyword}">다음</a></li>
 		</ul>
-	</div> --%>
+	</div>
     </div>
 </div>
 
@@ -125,9 +112,6 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
         });
     });
 
-    
-
 </script>
 
-<script src="/js/post/detail.js"></script>
 <%@ include file="../layout/footer.jsp"%>

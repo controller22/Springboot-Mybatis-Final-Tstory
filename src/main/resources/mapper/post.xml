@@ -92,4 +92,12 @@
 		VALUES(#{postTitle}, #{postContent}, #{userId}, now(), now())
 	</insert>
 
+	<select id="findAllHistory"
+		resultType="shop.mtcoding.tstory.dto.admin.PostHistoryRespDto">
+		SELECT row_number() over(order BY p.post_id desc) as number, p.post_title, p.created_at, u.nickname
+		FROM post_tb p 
+		INNER JOIN user_tb u 
+		ON p.user_id = u.user_id
+	</select>
+
 </mapper>

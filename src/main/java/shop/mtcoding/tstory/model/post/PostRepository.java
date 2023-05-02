@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import shop.mtcoding.tstory.dto.admin.PostHistoryRespDto;
 import shop.mtcoding.tstory.dto.main.KeywordRespDto;
 import shop.mtcoding.tstory.dto.post.PostAllRespDto;
 import shop.mtcoding.tstory.dto.post.PostDetailDto;
@@ -36,6 +37,8 @@ public interface PostRepository {
     public List<PostAllRespDto> findAllPost(Integer userId);
 
     public List<PostAllRespDto> findPost(@Param("categoryId") Integer categoryId,@Param("userId") Integer userId);
+
+    public List<PostHistoryRespDto> findAllHistory();
 
 
 }

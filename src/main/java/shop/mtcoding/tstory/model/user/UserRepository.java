@@ -26,6 +26,7 @@ public interface UserRepository {
 
     public CheckDto findByEmail(String email);
 
+
     public CheckDto findByNickname(String nickname);
 
     public User login(LoginDto loginDto);
@@ -39,4 +40,8 @@ public interface UserRepository {
     public void updateByPassword(@Param("passwordUpdate") String passwordUpdate, @Param("userId") Integer userId);
 
     public void updateByNickname(@Param("nickname") String nickname,@Param("userId")  Integer userId);
+
+    public List<User> findAllMember();
+
+    public List<User> findAllAdmin();
 }
