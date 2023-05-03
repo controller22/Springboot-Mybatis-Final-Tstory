@@ -17,9 +17,7 @@ public class PostService {
 	private final PostRepository postRepository;
 
 	@Transactional
-    public void 게시글등록하기(PostSaveReqDto postSaveReqDto, Integer userId) {
-		System.out.println("디버그 55 : "+postSaveReqDto.getPostTitle());
-		System.out.println("디버그 55 : "+postSaveReqDto.getPostContent());
+    public void 게시글등록하기(PostSaveReqDto postSaveReqDto) {
 		
     //     int pos = file.getOriginalFilename().lastIndexOf(".");
 	// 	String extension = file.getOriginalFilename().substring(pos + 1);
@@ -48,8 +46,7 @@ public class PostService {
 	// 		System.out.println("사진저장 실패");
 	// 	}
 	// 	postSaveDto.setPostThumnail(imgName);
-		postRepository.insertSave(postSaveReqDto.getPostTitle(), postSaveReqDto.getPostContent(), userId);
-		System.out.println("디버그11 ");
+		postRepository.insertSave(postSaveReqDto);
 	// }
 
     }

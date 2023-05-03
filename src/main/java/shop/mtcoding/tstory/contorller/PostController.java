@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.tstory.dto.ResponseDto;
+import shop.mtcoding.tstory.dto.main.HeaderRespDto;
 import shop.mtcoding.tstory.dto.post.PostAllRespDto;
 import shop.mtcoding.tstory.dto.post.PostDetailDto;
 import shop.mtcoding.tstory.dto.post.PostSaveReqDto;
 import shop.mtcoding.tstory.dto.post.PostUpdateReqDto;
+import shop.mtcoding.tstory.model.category.Category;
 import shop.mtcoding.tstory.model.category.CategoryRepository;
 import shop.mtcoding.tstory.model.post.PostRepository;
 import shop.mtcoding.tstory.model.user.User;
@@ -34,7 +36,7 @@ public class PostController {
 	private final PostService postService;
 	private final PostRepository postRepository;
 	private final UserRepository userRepository;
-	private final CategoryRepository categoryRespository;
+	private final CategoryRepository categoryRepository;
 	private final SubscribeService subscribeService;
 
 	// 게시글 수정하기 페이지
@@ -54,7 +56,7 @@ public class PostController {
 	// 게시글 수정 응답
 	@PutMapping("/post/update")
 	public @ResponseBody ResponseDto<?> update(@RequestBody PostUpdateReqDto postUpdateReqDto) {
-		System.out.println("디버그 : "+postUpdateReqDto.getPostContent());
+		
 		User principal = (User) session.getAttribute("principal");
 		postService.게시글수정하기(postUpdateReqDto,principal.getUserId());
 		// model.addAttribute("userId", principal.getUserId());
@@ -65,11 +67,17 @@ public class PostController {
 	@GetMapping("/post/writeForm")
 	public String writeForm(Model model) {
 		User principal = (User) session.getAttribute("principal");
+		List<HeaderRespDto> titleDto = categoryRepository.findByUserId(principal.getUserId());
+		List<Category> categoryPS = categoryRepository.findByUser(principal.getUserId());
+		if (categoryPS.size() == 0) {
+			return "redirect:/category/writeForm";
+		}
 		if (principal == null) {
 			return "redirect:/loginForm";
 		}
-		// List<HeaderDto> titleDto = categoryRespository.findByUserId(principal.getUserId());
-		// model.addAttribute("titleList", titleDto);
+		model.addAttribute("user", userRepository.findById(principal.getUserId()));
+		model.addAttribute("userImg", userRepository.findById(principal.getUserId()));
+		model.addAttribute("titleList", titleDto);
 		return "/post/writeForm";
 	}
 
@@ -78,9 +86,9 @@ public class PostController {
 	public @ResponseBody ResponseDto<?> write(
 		 // @RequestPart("file") MultipartFile file,
 			@RequestBody PostSaveReqDto postSaveReqDto) {
-		
+		System.out.println("디버그 : "+postSaveReqDto.getCategoryId());
 		User principal = (User) session.getAttribute("principal");
-		postService.게시글등록하기(postSaveReqDto, principal.getUserId());
+		postService.게시글등록하기(postSaveReqDto);
 		return new ResponseDto<>(1, "게시글 등록 성공", null);
 	}
 
@@ -142,7 +150,7 @@ public class PostController {
 	// 게시글 삭제 응답
 	@DeleteMapping("/post/delete/{postId}")
 	public @ResponseBody ResponseDto<?> delete(@PathVariable Integer postId) {
-		System.out.println("디버그 : ");
+
 		postRepository.delete(postId);
 		return new ResponseDto<>(1, "게시글 삭제 성공", null);
 	}

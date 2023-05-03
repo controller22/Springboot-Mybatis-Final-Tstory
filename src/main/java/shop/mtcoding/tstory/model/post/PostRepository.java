@@ -9,6 +9,7 @@ import shop.mtcoding.tstory.dto.admin.PostHistoryRespDto;
 import shop.mtcoding.tstory.dto.main.KeywordRespDto;
 import shop.mtcoding.tstory.dto.post.PostAllRespDto;
 import shop.mtcoding.tstory.dto.post.PostDetailDto;
+import shop.mtcoding.tstory.dto.post.PostSaveReqDto;
 import shop.mtcoding.tstory.dto.post.PostUpdateReqDto;
 
 
@@ -30,7 +31,7 @@ public interface PostRepository {
 
     public PostDetailDto findByIdAndUser(@Param("postId") Integer postId,@Param("userId")  Integer userId);
 
-    public void insertSave(@Param("postTitle") String postTitle, @Param("postContent") String postContent, @Param("userId") Integer userId);
+    public void insertSave(PostSaveReqDto postSaveReqDto);
 
     public PostUpdateReqDto findByIdUpdate(@Param("postId") Integer postId, @Param("userId") Integer userId);
 

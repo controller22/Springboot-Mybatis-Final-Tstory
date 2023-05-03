@@ -25,8 +25,10 @@ public interface CategoryRepository {
     public CheckDto findByCategoryTitle(@Param("categoryTitle") String categoryTitle, @Param("userId") Integer userId);
 
     public List<HeaderRespDto> findByUserId(Integer userId);
-
+        
 	public Category findByCategoryTitleId(@Param("categoryId") Integer categoryId,@Param("userId") Integer userId);
 
     public void updateCategoryTitle(@Param("categoryTitle") String categoryTitle, @Param("userId") Integer userId, @Param("categoryId") Integer categoryId);
+
+    public List<Category> findByUser(Integer userId);
 }

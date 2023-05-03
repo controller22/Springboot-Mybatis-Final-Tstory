@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
 <div class="container">
-  <div class="d-flex justify-content-between align-items-center" style="width: 930px;">
+  <div class="d-flex justify-content-between align-items-center" style="width: 100%;">
     <div class="d-flex align-items-center">
       <div style="width: 100px;">
         <h5 style="line-height: 50px;">전체글(${postCount.postCount})</h5>
@@ -24,7 +24,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
         </div>
       </c:if>
     </div>
-    <div class="write_icon">
+    <div class="write_icon ">
       <c:if test="${principal.userId == user.userId}">
         <div class="d-flex justify-content-end my_mb_sm_1">
           <a href="/post/writeForm" class="my_atag_none">

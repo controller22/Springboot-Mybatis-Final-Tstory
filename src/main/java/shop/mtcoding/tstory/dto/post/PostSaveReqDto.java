@@ -9,5 +9,6 @@ public class PostSaveReqDto {
     private String postTitle;
 	private String postContent;
 	// private String postThumnail;
-	// private Integer categoryId;    
+	private Integer userId;
+	private Integer categoryId;    
 }

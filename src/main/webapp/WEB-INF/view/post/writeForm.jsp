@@ -64,7 +64,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
 
         // if ($("#file")[0].files[0] == null) {
              let data = {
-            // categoryId: $("#categoryId").val(),
+            categoryId: $("#categoryId").val(),
             userId: $("#userId").val(),
             postTitle: $("#postTitle").val(),
             postContent: $("#postContent").val(),
