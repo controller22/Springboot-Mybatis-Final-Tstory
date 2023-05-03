@@ -167,11 +167,10 @@ public class UserController {
     // 닉네임 수정 응답
     @PostMapping("/user/updateNickname")
     public @ResponseBody ResponseDto<?> updateNickname(@RequestBody UpdateNicknameDto updateNicknameDto) {
-        System.out.println("디버그 : "+updateNicknameDto.getNickname());
-        System.out.println("디버그 : "+updateNicknameDto.getNicknameUpdate());
+    
         User principal = (User) session.getAttribute("principal");
         userRepository.updateByNickname(updateNicknameDto.getNicknameUpdate(), principal.getUserId());
-        System.out.println("디버그 : ");
+
         return new ResponseDto<>(1, "성공", null);
     }
 }
