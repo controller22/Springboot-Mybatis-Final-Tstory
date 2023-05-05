@@ -1,5 +1,11 @@
 package shop.mtcoding.tstory.contorller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.util.UUID;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -8,7 +14,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.tstory.dto.ResponseDto;
@@ -17,6 +25,7 @@ import shop.mtcoding.tstory.dto.user.LoginDto;
 import shop.mtcoding.tstory.dto.user.PasswordCheckDto;
 import shop.mtcoding.tstory.dto.user.UpdateNicknameDto;
 import shop.mtcoding.tstory.dto.user.UpdatePasswordDto;
+import shop.mtcoding.tstory.dto.user.UpdateProfileReqDto;
 import shop.mtcoding.tstory.dto.user.UserUpdateDto;
 import shop.mtcoding.tstory.model.user.User;
 import shop.mtcoding.tstory.model.user.UserRepository;
@@ -143,7 +152,40 @@ public class UserController {
         }
         User userPS = userRepository.findById(principal.getUserId());
         model.addAttribute("user", userPS);
+        model.addAttribute("userImg", userRepository.findById(principal.getUserId()));
         return "/user/profileUpdateForm";
+    }
+
+    // 프로필 수정 응답
+    @PostMapping("/user/profileUpdate")
+    public @ResponseBody ResponseDto<?> updateProfile(@RequestPart("file") MultipartFile file,
+            @RequestPart("updateProfileDto") UpdateProfileReqDto updateProfileDto) throws Exception {
+        int pos = file.getOriginalFilename().lastIndexOf(".");
+        String extension = file.getOriginalFilename().substring(pos + 1);
+        String filePath = "src/main/resources/static/img/";
+        String imgSaveName = UUID.randomUUID().toString();
+        String imgName = imgSaveName + "." + extension;
+        
+
+        File makeFileFolder = new File(filePath);
+        if (!makeFileFolder.exists()) {
+            if (!makeFileFolder.mkdir()) {
+                throw new Exception("File.mkdir():Fail.");
+            }
+        }
+        File dest = new File(filePath, imgName);
+        try {
+            Files.copy(file.getInputStream(), dest.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("사진저장");
+        }
+        
+        
+        updateProfileDto.setProfileImg(imgName);
+        userService.프로필이미지변경하기(updateProfileDto.getProfileImg());
+
+        return new ResponseDto<>(1, "업로드 성공", imgName);
     }
 
     // 회원 탈퇴 응답
@@ -173,4 +215,6 @@ public class UserController {
 
         return new ResponseDto<>(1, "성공", null);
     }
+
+
 }

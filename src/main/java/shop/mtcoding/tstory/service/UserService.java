@@ -22,7 +22,7 @@ public class UserService {
 	private final CategoryRepository categoryRespository;
 	private final SHA256 sha256;
 
-	// @Transactional
+	@Transactional
 	public void 회원가입(JoinDto joinDto) {
 		String encPassword = sha256.encrypt(joinDto.getPassword());
 		joinDto.setPassword(encPassword); // 회원가입으로 받은 비밀번호 암호화
@@ -30,6 +30,7 @@ public class UserService {
 		System.out.println("디버깅11 : ");
 	}
 
+	@Transactional
 	public boolean 유저네임중복확인(String username) {
 		User usersPS = userRepository.findByUsername(username);
 
@@ -40,6 +41,7 @@ public class UserService {
 		}
 	}
 
+	@Transactional
 	public boolean 이메일중복확인(String email) {
 		CheckDto usersPS = userRepository.findByEmail(email);
 
@@ -50,6 +52,7 @@ public class UserService {
 		}
 	}
 
+	@Transactional
 	public boolean 닉네임중복확인(String nickname) {
 		CheckDto usersPS = userRepository.findByNickname(nickname);
 
@@ -60,6 +63,7 @@ public class UserService {
 		}
 	}
 
+	@Transactional
     public boolean 카테고리명중복확인(String categoryTitle, Integer userId) {
 		System.out.println("디버그");
 		CheckDto categoryPS = categoryRespository.findByCategoryTitle(categoryTitle, userId);
@@ -69,5 +73,11 @@ public class UserService {
 		} else { // 중복됨
 			return true;
 		}
+    }
+	
+	@Transactional
+    public void 프로필이미지변경하기(String profileImg) {
+		User principal = (User) session.getAttribute("principal");
+		userRepository.updateByProfileImage(profileImg, principal.getUserId());
     }
 }
