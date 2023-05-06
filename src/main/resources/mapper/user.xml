@@ -93,4 +93,10 @@
     	WHERE role = 'admin'
 	</select>
 
+	 <update id="updateByProfileImage">
+          UPDATE user_tb
+		  SET profile_img = #{profileImg}
+		  WHERE user_id = #{userId}
+    </update>
+
 </mapper>

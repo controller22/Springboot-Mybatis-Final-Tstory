@@ -17,8 +17,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
                 type="file"
                 id="file"
                 accept="image/*"
-                onchange="setThumbnail(event)
-                "
+                onchange="setThumbnail(event)"
             />
             <br /><br />
             <div style="text-align: right">
@@ -84,58 +83,69 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
 </div>
 
 <script>
-    // function setThumbnail(event) {
-    //     let reader = new FileReader();
+    function setThumbnail(event) {
+        let reader = new FileReader();
 
-    //     reader.onload = function (event) {
-    //         if (document.getElementById("newImg")) {
-    //             document.getElementById("newImg").remove();
-    //         }
-    //         let img = document.createElement("img");
-    //         img.setAttribute("src", event.target.result);
-    //         img.setAttribute("id", "newImg");
-    //         img.style.width = "100px";
-    //         img.style.height = "100px";
-    //         img.style.borderRadius = "70%";
-    //         document.querySelector("#imageContainer").appendChild(img);
-    //     };
-    //     reader.readAsDataURL(event.target.files[0]);
-    // }
+        reader.onload = function (event) {
+            if (document.getElementById("newImg")) {
+                document.getElementById("newImg").remove();
+            }
+            let img = document.createElement("img");
+            img.setAttribute("src", event.target.result);
+            img.setAttribute("id", "newImg");
+            img.style.width = "100px";
+            img.style.height = "100px";
+            img.style.borderRadius = "70%";
+            document.querySelector("#imageContainer").appendChild(img);
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
 
-    // function profileUpdate() {
-    //     if ($("#file")[0].files[0] == null) {
-    //         alert("변경할 이미지를 선택 해주셔야 합니다.");
-    //         return;
-    //     }
 
-    //     let formData = new FormData();
 
-    //     let data = {
-    //         userId: $("#userId").val(),
-    //     };
 
-    //     formData.append("file", $("#file")[0].files[0]);
-    //     formData.append(
-    //         "updateProfileDto",
-    //         new Blob([JSON.stringify(data)], { type: "application/json" })
-    //     );
 
-    //     $.ajax("/s/api/user/profileUpdate", {
-    //         type: "POST",
-    //         data: formData,
-    //         processData: false,
-    //         contentType: false,
-    //         enctype: "multipart/form-data",
-    //     }).done((res) => {
-    //         if (res.code == 1) {
-    //             alert("이미지가 변경되었습니다.");
-    //             location.href = "/s/api/user/profileUpdateForm";
-    //         } else {
-    //             alert("이미지 파일을 다시 확인해주세요.");
-    //             return false;
-    //         }
-    //     });
-    // }
+    function profileUpdate() {
+        if ($("#file")[0].files[0] == null) {
+            alert("변경할 이미지를 선택 해주셔야 합니다.");
+            return;
+        }
+
+        let formData = new FormData();
+
+        let data = {
+            userId: $("#userId").val(),
+        };
+
+        formData.append("file", $("#file")[0].files[0]);
+        formData.append(
+            "updateProfileDto",
+            new Blob([JSON.stringify(data)], { type: "application/json" })
+        );
+
+        $.ajax("/user/profileUpdate", {
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            enctype: "multipart/form-data",
+        }).done((res) => {
+            if (res.code == 1) {
+                alert("이미지가 변경되었습니다.");
+                location.href = "/";
+            } else {
+                alert("이미지 파일을 다시 확인해주세요.");
+                return false;
+            }
+        });
+    }
+
+
+
+
+
+
+
 
     function updateNickname() {
         if (validNickname()) {

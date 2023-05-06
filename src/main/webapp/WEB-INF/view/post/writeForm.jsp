@@ -24,12 +24,12 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
     <div class="mb-3">
         <textarea class="form-control" rows="8" id="postContent"></textarea>
     </div>
-    <%-- <div class="form-control d-flex justify-content-left">
+    <div class="form-control d-flex justify-content-left">
         <div>
             섬네일 사진 등록 :
             <input type="file" id="file" accept="image/*" />
         </div>
-    </div> --%>
+    </div>
     <div  style="display: flex;justify-content: right;">
     <button type="button" class="my_active_btn" id="writeBtn">
         글쓰기 등록
@@ -62,7 +62,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
             return;
         }
 
-        // if ($("#file")[0].files[0] == null) {
+        if ($("#file")[0].files[0] == null) {
              let data = {
             categoryId: $("#categoryId").val(),
             userId: $("#userId").val(),
@@ -70,7 +70,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
             postContent: $("#postContent").val(),
         };
 
-        $.ajax("/post/write", {
+        $.ajax("/post/write/noImg", {
              type: "POST",
             dataType: "json",
             data: JSON.stringify(data),
@@ -90,39 +90,39 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
         }
 
     
-        // let userId = $("#userId").val();
+        let userId = $("#userId").val();
 
-        // let formData = new FormData();
-        // let data = {
-        //     categoryId: $("#categoryId").val(),
-        //     userId: $("#userId").val(),
-        //     postTitle: $("#postTitle").val(),
-        //     postContent: $("#postContent").val()
-        // };
+        let formData = new FormData();
+        let data = {
+            categoryId: $("#categoryId").val(),
+            userId: $("#userId").val(),
+            postTitle: $("#postTitle").val(),
+            postContent: $("#postContent").val()
+        };
 
-        // formData.append("file", $("#file")[0].files[0]);
-        // formData.append(
-        //     "postSaveDto",
-        //     new Blob([JSON.stringify(data)], { type: "application/json" })
-        // );
+        formData.append("file", $("#file")[0].files[0]);
+        formData.append(
+            "postSaveReqDto",
+            new Blob([JSON.stringify(data)], { type: "application/json" })
+        );
 
-        // $.ajax("/post/write", {
-        //     type: "POST",
-        //     data: formData,
-        //     processData: false, // 쿼리스트링 방지
-        //     contentType: false,
-        //     enctype: "multipart/form-data",
-        // }).done((res) => {
-        //     if (res.code == 1) {
-        //         console.log("asdasd");
-        //         alert("게시글이 등록되었습니다.");
-        //         location.href = "/post/listForm/"+userId;
-        //     } else {
-        //         alert("게시글 입력 정보를 다시 확인해주세요.");
-        //         return false;
-        //     }
-        // });
-
+        $.ajax("/post/write", {
+            type: "POST",
+            data: formData,
+            processData: false, // 쿼리스트링 방지
+            contentType: false,
+            enctype: "multipart/form-data",
+        }).done((res) => {
+            if (res.code == 1) {
+                console.log("성공");
+                alert("게시글이 등록되었습니다.");
+                location.href = "/post/listForm/"+userId;
+            } else {
+                alert("게시글 입력 정보를 다시 확인해주세요.");
+                return false;
+            }
+        });
+    }
 </script>
 
 <%@ include file="../layout/footer.jsp"%>
