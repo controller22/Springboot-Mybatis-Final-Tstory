@@ -69,9 +69,8 @@
 		  post_content = #{postContent},
 		  post_thumnail = #{postThumnail},
 		  user_id = #{userId}
-		  <!-- category_id = #{categoryId} -->
+		  category_id = #{categoryId}
 		  where post_id=#{postId}
-
     </update>
 
 	<delete id="delete">
@@ -88,8 +87,8 @@
 
 	<insert id="insertSave">
 		INSERT
-		INTO post_tb(post_title, post_content, user_id, updated_at, created_at)
-		VALUES(#{postTitle}, #{postContent}, #{userId}, now(), now())
+		INTO post_tb(post_title, post_content, post_thumnail, user_id, category_id, updated_at, created_at)
+		VALUES(#{postTitle}, #{postContent},#{postThumnail}, #{userId}, #{categoryId}, now(), now())
 	</insert>
 
 	<select id="findAllHistory"

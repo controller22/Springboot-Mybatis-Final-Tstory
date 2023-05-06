@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.tstory.dto.ResponseDto;
@@ -67,14 +69,15 @@ public class PostController {
 	@GetMapping("/post/writeForm")
 	public String writeForm(Model model) {
 		User principal = (User) session.getAttribute("principal");
+		if (principal == null) {
+			return "redirect:/loginForm";
+		}
 		List<HeaderRespDto> titleDto = categoryRepository.findByUserId(principal.getUserId());
 		List<Category> categoryPS = categoryRepository.findByUser(principal.getUserId());
 		if (categoryPS.size() == 0) {
 			return "redirect:/category/writeForm";
 		}
-		if (principal == null) {
-			return "redirect:/loginForm";
-		}
+		
 		model.addAttribute("user", userRepository.findById(principal.getUserId()));
 		model.addAttribute("userImg", userRepository.findById(principal.getUserId()));
 		model.addAttribute("titleList", titleDto);
@@ -83,13 +86,22 @@ public class PostController {
 
 	// 게시글 등록 응답
 	@PostMapping("/post/write")
-	public @ResponseBody ResponseDto<?> write(
-		 // @RequestPart("file") MultipartFile file,
-			@RequestBody PostSaveReqDto postSaveReqDto) {
+	public @ResponseBody ResponseDto<?> write(@RequestPart("file") MultipartFile file,
+			@RequestPart("postSaveReqDto") PostSaveReqDto postSaveReqDto) throws Exception {
+		
+			System.out.println("디버그 : ");
+
+		User principal = (User) session.getAttribute("principal");
+		postService.게시글등록하기(postSaveReqDto, principal.getUserId(), file);
+		return new ResponseDto<>(1, "게시글 등록 성공", null);
+	}
+
+	@PostMapping("/post/write/noImg")
+	public @ResponseBody ResponseDto<?> writeNoImg(@RequestBody PostSaveReqDto postSaveReqDto) {
 		System.out.println("디버그 : "+postSaveReqDto.getCategoryId());
 		User principal = (User) session.getAttribute("principal");
-		postService.게시글등록하기(postSaveReqDto);
-		return new ResponseDto<>(1, "게시글 등록 성공", null);
+		postService.썸네일없는게시글등록하기(postSaveReqDto, principal.getUserId());
+		return new ResponseDto<>(1, "이미지없는 게시글 등록 성공", null);
 	}
 
 	// 블로그 전체 게시글 목록 페이지
