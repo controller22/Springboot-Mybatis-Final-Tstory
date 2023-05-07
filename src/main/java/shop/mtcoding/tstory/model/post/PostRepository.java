@@ -35,7 +35,7 @@ public interface PostRepository {
 
     public PostUpdateReqDto findByIdUpdate(@Param("postId") Integer postId, @Param("userId") Integer userId);
 
-    public List<PostAllRespDto> findAllPost(Integer userId);
+    public List<PostAllRespDto> findAllPost(@Param("userId") Integer userId,@Param("keyword") String keyword);
 
     public List<PostAllRespDto> findPost(@Param("categoryId") Integer categoryId,@Param("userId") Integer userId);
 

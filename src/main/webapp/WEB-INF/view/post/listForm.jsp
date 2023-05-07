@@ -10,6 +10,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
         <div class="d-flex justify-content-end">
           <div>
             <form style="display: inline-flex" method="get" action="/post/listForm/${user.userId}">
+            <%-- <input id="userId" name="userId"  type="number" value="${postList.userId}"> --%>
               <input style="width: 150px" class="my_auth_form_box_input" type="text" name="keyword" />
               <button class="btn btn-sm btn-light" type="submit"><i class="fa fa-search -retro fa-2x"></i></button>
             </form>
@@ -66,7 +67,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
             </div>
         </c:forEach>
 
-        <!-- 페이지 -->
+        <%-- <!-- 페이지 -->
 <div class="d-flex justify-content-center">
 		<ul class="pagination">
 			<li class='page-item ${paging.first ? "disabled" : ""}'><a style="color: black;" class="page-link"
@@ -82,7 +83,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
 		</ul>
 	</div>
     </div>
-</div>
+</div> --%>
 
 
 
