@@ -18,7 +18,7 @@
 		  FROM post_tb p
 		  INNER JOIN user_tb u
 		  ON p.user_id = u.user_id
-		  WHERE p.user_id = #{userId}
+		  WHERE p.user_id = #{userId} AND p.post_title like  CONCAT('%', #{keyword}, '%')
 		  ORDER BY p.post_id DESC
     </select>
 

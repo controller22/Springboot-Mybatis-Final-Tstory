@@ -106,26 +106,34 @@ public class PostController {
 
 	// 블로그 전체 게시글 목록 페이지
 	@GetMapping("/post/listForm/{userId}")
-	public String list(@PathVariable Integer userId, Model model) {
+	public String list(@PathVariable Integer userId, Model model, String keyword) {
+		// System.out.println("디버그 : "+postRepository.findAllPost(userId,null).get(0).getUserId());
 		User principal = (User) session.getAttribute("principal");
-
-		// if (principal != null) {
-			List<PostAllRespDto> postList = postRepository.findAllPost(userId);
-			model.addAttribute("postList", postList); // 블로그 전체게시글
+		if (keyword == null || keyword.isEmpty()) {
+			model.addAttribute("postList",postRepository.findAllPost(userId,null));
 			model.addAttribute("user", userRepository.findById(userId));
-		// }
+			if (principal != null) {
+				model.addAttribute("userImg", userRepository.findById(principal.getUserId()));
+			}
+		}
 
-		// else {
-		// 	List<PostAllDto> postList = postDao.findAllPost(userId, keyword, startNum);
-		// 	model.addAttribute("postList", postList); // 블로그 전체게시글
-		// 	PagingDto paging = postDao.paging(page, userId, keyword);
-		// 	paging.makeBlockInfoByPostAll(keyword);
-		// 	model.addAttribute("postCount", postDao.postCount(userId, keyword)); // 전체게시글 개수
-		// 	model.addAttribute("paging", paging); // 페이징
-		// 	model.addAttribute("categoryList", categoryDao.findByUserId(userId)); // 사이드바 카테고리 이동 => 공통
-		// 	model.addAttribute("visit", visitDao.findByVisitCount(userId));
+		if (principal != null) {
 
-		// }
+			List<PostAllRespDto> postList = postRepository.findAllPost(principal.getUserId(), keyword);
+			model.addAttribute("postList", postList); // 블로그 전체게시글
+			
+			model.addAttribute("categoryList", categoryRepository.findByUserId(userId)); // 사이드바 카테고리 이동 => 공통
+			model.addAttribute("user", userRepository.findById(principal.getUserId()));
+			model.addAttribute("userImg", userRepository.findById(principal.getUserId()));
+			
+		}
+
+		else {
+			List<PostAllRespDto> postList = postRepository.findAllPost(userId, keyword);
+			model.addAttribute("postList", postList); // 블로그 전체게시글
+			model.addAttribute("categoryList", categoryRepository.findByUserId(userId)); // 사이드바 카테고리 이동 => 공통
+			
+		}
 		return "/post/listForm";
 	}
 
