@@ -29,7 +29,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
             <a
                 class="btn btn-outline-warning"
                 href="/post/updateForm/${post.postId}"
-                style="height:38px;width: 58px;"
+                style="height:38px;width: 60px;"
                 >수정</a
             >
             <form>

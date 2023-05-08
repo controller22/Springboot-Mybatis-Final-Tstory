@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.tstory.dto.ResponseDto;
 import shop.mtcoding.tstory.dto.main.HeaderRespDto;
+import shop.mtcoding.tstory.dto.paging.PagingRespDto;
 import shop.mtcoding.tstory.dto.post.PostAllRespDto;
 import shop.mtcoding.tstory.dto.post.PostDetailDto;
 import shop.mtcoding.tstory.dto.post.PostSaveReqDto;
@@ -106,11 +107,26 @@ public class PostController {
 
 	// 블로그 전체 게시글 목록 페이지
 	@GetMapping("/post/listForm/{userId}")
-	public String list(@PathVariable Integer userId, Model model, String keyword) {
-		// System.out.println("디버그 : "+postRepository.findAllPost(userId,null).get(0).getUserId());
+	public String list(@PathVariable Integer userId,  Integer page,Model model, String keyword) {
 		User principal = (User) session.getAttribute("principal");
+		Integer num =0;
+		if (page == null) {
+			page = num;
+		}
+		
+		Integer startNum = page * 5;
+		
 		if (keyword == null || keyword.isEmpty()) {
-			model.addAttribute("postList",postRepository.findAllPost(userId,null));
+			System.out.println("디버그 : "+page);
+			// PagingRespDto paging = postRepository.paging(page, userId, null);
+			// paging.makeBlockInfo();
+
+			model.addAttribute("postCount", postRepository.postCount(userId, null)); // 전체게시글 개수
+			// model.addAttribute("paging", paging); // 페이징
+			model.addAttribute("postList",postRepository.findAllPost(userId,null, startNum));
+			model.addAttribute("categoryList", categoryRepository.findByUserId(userId)); 
+			
+			
 			model.addAttribute("user", userRepository.findById(userId));
 			if (principal != null) {
 				model.addAttribute("userImg", userRepository.findById(principal.getUserId()));
@@ -119,17 +135,21 @@ public class PostController {
 
 		if (principal != null) {
 
-			List<PostAllRespDto> postList = postRepository.findAllPost(principal.getUserId(), keyword);
+			List<PostAllRespDto> postList = postRepository.findAllPost(principal.getUserId(), keyword,startNum);
 			model.addAttribute("postList", postList); // 블로그 전체게시글
 			
+			/* PagingRespDto paging = postRepository.paging(page, userId, keyword);
+			paging.makeBlockInfoByPostAll(keyword);
+			model.addAttribute("postCount", postRepository.postCount(userId, keyword)); // 전체게시글 개수
+			model.addAttribute("paging", paging); // 페이징 */
 			model.addAttribute("categoryList", categoryRepository.findByUserId(userId)); // 사이드바 카테고리 이동 => 공통
-			model.addAttribute("user", userRepository.findById(principal.getUserId()));
+			model.addAttribute("user", userRepository.findById(userId));
 			model.addAttribute("userImg", userRepository.findById(principal.getUserId()));
 			
 		}
 
 		else {
-			List<PostAllRespDto> postList = postRepository.findAllPost(userId, keyword);
+			List<PostAllRespDto> postList = postRepository.findAllPost(userId, keyword,startNum);
 			model.addAttribute("postList", postList); // 블로그 전체게시글
 			model.addAttribute("categoryList", categoryRepository.findByUserId(userId)); // 사이드바 카테고리 이동 => 공통
 			

@@ -3,10 +3,12 @@ package shop.mtcoding.tstory.model.post;
 import java.sql.Timestamp;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class Post {
 	private Integer postId;
 	private String postTitle;
