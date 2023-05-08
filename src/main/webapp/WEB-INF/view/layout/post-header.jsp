@@ -112,7 +112,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                 >
                                 <a
                                     class="dropdown-item"
-                                    href="/user/passwordCheckForm"
+                                    href="/passwordCheckForm"
                                     >계정관리</a
                                 >
                                 <a
