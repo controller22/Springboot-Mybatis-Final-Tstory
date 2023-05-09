@@ -1,5 +1,6 @@
 package shop.mtcoding.tstory.contorller;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -58,12 +59,27 @@ public class PostController {
 
 	// 게시글 수정 응답
 	@PutMapping("/post/update")
-	public @ResponseBody ResponseDto<?> update(@RequestBody PostUpdateReqDto postUpdateReqDto) {
+	public @ResponseBody ResponseDto<?> update(
+		@RequestPart ("file") MultipartFile file,
+		@RequestPart("postUpdateReqDto") PostUpdateReqDto postUpdateReqDto) throws Exception {
 		
 		User principal = (User) session.getAttribute("principal");
-		postService.게시글수정하기(postUpdateReqDto,principal.getUserId());
+		postService.게시글수정하기(postUpdateReqDto,principal.getUserId(),file);
 		// model.addAttribute("userId", principal.getUserId());
 		return new ResponseDto<>(1, "게시글 수정성공", null);
+	}
+
+	// 썸네일 없는 게시글 수정 응답
+	@PutMapping("/post/update/noImg")
+	public @ResponseBody ResponseDto<?> updateNoImg(@RequestBody PostUpdateReqDto postUpdateReqDto) {
+		System.out.println("디버그 getNoFile : " + postUpdateReqDto.getNoFile());
+		User principal = (User) session.getAttribute("principal");
+		if (postUpdateReqDto.getNoFile() == null) {
+			System.out.println("디버그 : 원래 썸네일없");
+			postService.원래썸네일없는게시글수정하기(postUpdateReqDto, principal.getUserId());
+		}
+		postService.썸네일없는게시글로수정하기(postUpdateReqDto, principal.getUserId());
+		return new ResponseDto<>(1, "썸네일없는게시글 수정 성공", null);
 	}
 
 	// 게시글 등록 페이지
