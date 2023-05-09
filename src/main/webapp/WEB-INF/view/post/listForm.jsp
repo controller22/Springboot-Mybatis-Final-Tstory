@@ -28,7 +28,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
     <div class="write_icon ">
       <c:if test="${principal.userId == user.userId}">
         <div class="d-flex justify-content-end my_mb_sm_1">
-          <a href="/post/writeForm" class="my_atag_none">
+          <a href="/api/post/writeForm" class="my_atag_none">
             <i class="fa-solid fa-pencil fa-2x" style="padding-top: 20px;"></i>
           </a>
         </div>

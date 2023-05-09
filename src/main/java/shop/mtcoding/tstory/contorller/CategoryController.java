@@ -31,12 +31,9 @@ public class CategoryController {
 	private final HttpSession session;
 
 	// 카테고리 등록 페이지
-	@GetMapping("/category/writeForm")
+	@GetMapping("/api/category/writeForm")
 	public String writeForm(Model model) {
 		User principal = (User) session.getAttribute("principal");
-		if (principal == null) {
-			return "redirect:/loginForm";
-		}
 		model.addAttribute("principal", principal);
 		model.addAttribute("user", userRepository.findById(principal.getUserId()));
 		model.addAttribute("userImg", userRepository.findById(principal.getUserId()));
@@ -45,7 +42,7 @@ public class CategoryController {
 	}
 
 	// 카테고리 등록 응답
-	@PostMapping("/category/write")
+	@PostMapping("/api/category/write")
 	public @ResponseBody ResponseDto<?> write(@RequestBody InsertCategoryTitleReqDto insertCategoryTitleReqDto, Model model) {
 		
 		User principal = (User) session.getAttribute("principal");
@@ -84,14 +81,14 @@ public class CategoryController {
 		return "/category/listForm";
 	}
 
-	@DeleteMapping("/category/{categoryId}")
+	@DeleteMapping("/api/category/{categoryId}")
 		public @ResponseBody ResponseDto<?> delete(@PathVariable Integer categoryId) {
 		categoryRepository.delete(categoryId);
 		return new ResponseDto<>(1, "게시글 삭제 성공", null);
 	}
 
 	// 카테고리 수정 페이지
-	@GetMapping("/category/updateForm/{categoryId}")
+	@GetMapping("/api/category/updateForm/{categoryId}")
 	public String updateForm(Model model, @PathVariable Integer categoryId) {
 		User principal = (User) session.getAttribute("principal");
 		model.addAttribute("user", userRepository.findById(principal.getUserId()));
@@ -100,7 +97,7 @@ public class CategoryController {
 	}
 
 	// 카테고리명 수정 응답
-	@PutMapping("/user/categoryTitle")
+	@PutMapping("/api/user/categoryTitle")
 	public @ResponseBody ResponseDto<?> update(@RequestBody UpdateCategoryTitleReqDto updateCategoryTitleDto) {
 		categoryRepository.updateCategoryTitle(updateCategoryTitleDto.getCategoryTitle(), updateCategoryTitleDto.getUserId(),
 				updateCategoryTitleDto.getCategoryId());

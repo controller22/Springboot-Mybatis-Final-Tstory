@@ -116,7 +116,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                             <div class="dropdown-menu">
                                 <a
                                     class="dropdown-item"
-                                    href="/s/api/subscribe/listForm"
+                                    href="/api/subscribe/listForm"
                                     >구독관리</a
                                 >
                                 <a
@@ -126,12 +126,12 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                 >
                                 <a
                                     class="dropdown-item"
-                                    href="/passwordCheckForm"
+                                    href="/api/passwordCheckForm"
                                     >계정관리</a
                                 >
                                 <a
                                     class="dropdown-item"
-                                    href="/category/writeForm"
+                                    href="/api/category/writeForm"
                                     >카테고리등록</a
                                 >
 
@@ -169,12 +169,12 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                 >
                                 <a
                                     class="dropdown-item"
-                                    href="/passwordCheckForm"
+                                    href="/api/passwordCheckForm"
                                     >계정관리</a
                                 >
                                 <a
                                     class="dropdown-item"
-                                    href="/category/writeForm"
+                                    href="/api/category/writeForm"
                                     >카테고리등록</a
                                 >
                                  <c:choose>

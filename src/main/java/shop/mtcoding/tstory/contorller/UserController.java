@@ -84,7 +84,7 @@ public class UserController {
     }
 
     // 비밀번호 확인 페이지
-    @GetMapping("/passwordCheckForm")
+    @GetMapping("/api/passwordCheckForm")
     public String passwordCheckForm() {
         User principal = (User) session.getAttribute("principal");
         if (principal == null) {
@@ -94,7 +94,7 @@ public class UserController {
     }
 
     // 비밀번호 확인 응답
-    @PostMapping("/user/checkPassword")
+    @PostMapping("/api/user/checkPassword")
     public @ResponseBody ResponseDto<?> passwordCheck(@RequestBody PasswordCheckDto passwordCheckDto) {
         User principal = (User) session.getAttribute("principal");
         User userPS = userRepository.findByPasswordAndUserId(passwordCheckDto.getPassword(), principal.getUserId());
@@ -105,7 +105,7 @@ public class UserController {
     }
 
     // 비밀번호 수정 페이지
-    @GetMapping("/user/passwordUpdateForm")
+    @GetMapping("/api/user/passwordUpdateForm")
     public String passwordUpdateForm() {
         User principal = (User) session.getAttribute("principal");
         if (principal == null) {
@@ -125,7 +125,7 @@ public class UserController {
     // }
 
     // 계정 수정 페이지
-    @GetMapping("/user/updateForm")
+    @GetMapping("/api/user/updateForm")
     public String updateForm(Model model) {
         User principal = (User) session.getAttribute("principal");
         if (principal == null) {
@@ -136,7 +136,7 @@ public class UserController {
     }
 
     // 계정 수정 응답
-    @PostMapping("/user/update")
+    @PostMapping("/api/user/update")
     public @ResponseBody ResponseDto<?> update(@RequestBody UserUpdateDto userUpdateDto) {
         User principal = (User)session.getAttribute("principal");
         userRepository.updateById(userUpdateDto.getPasswordUpdate(),userUpdateDto.getEmail(), principal.getUserId());
@@ -144,7 +144,7 @@ public class UserController {
     }
 
     // 프로필 수정 페이지
-    @GetMapping("/user/profileUpdateForm")
+    @GetMapping("/api/user/profileUpdateForm")
     public String profileUpdateForm(Model model) {
         User principal = (User) session.getAttribute("principal");
         if (principal == null) {
@@ -157,7 +157,7 @@ public class UserController {
     }
 
     // 프로필 수정 응답
-    @PostMapping("/user/profileUpdate")
+    @PostMapping("/api/user/profileUpdate")
     public @ResponseBody ResponseDto<?> updateProfile(@RequestPart("file") MultipartFile file,
             @RequestPart("updateProfileDto") UpdateProfileReqDto updateProfileDto) throws Exception {
         int pos = file.getOriginalFilename().lastIndexOf(".");
@@ -189,7 +189,7 @@ public class UserController {
     }
 
     // 회원 탈퇴 응답
-    @DeleteMapping("/user/leave")
+    @DeleteMapping("/api/user/leave")
     public @ResponseBody ResponseDto<?> leave() {
         User principal = (User) session.getAttribute("principal");
             userRepository.delete(principal.getUserId());
@@ -198,7 +198,7 @@ public class UserController {
         }
 
     // 비밀번호 수정 응답
-    @PostMapping("/user/updatePassword")
+    @PostMapping("/api/user/updatePassword")
     public @ResponseBody ResponseDto<?> updatePassword(@RequestBody UpdatePasswordDto updatePasswordDto) {
         User principal = (User) session.getAttribute("principal");
         userRepository.updateByPassword(updatePasswordDto.getPasswordUpdate(), principal.getUserId());
@@ -207,7 +207,7 @@ public class UserController {
     }
 
     // 닉네임 수정 응답
-    @PostMapping("/user/updateNickname")
+    @PostMapping("/api/user/updateNickname")
     public @ResponseBody ResponseDto<?> updateNickname(@RequestBody UpdateNicknameDto updateNicknameDto) {
     
         User principal = (User) session.getAttribute("principal");
