@@ -2,7 +2,6 @@ package shop.mtcoding.tstory.contorller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.UUID;
 
@@ -30,6 +29,7 @@ import shop.mtcoding.tstory.dto.user.UserUpdateDto;
 import shop.mtcoding.tstory.model.user.User;
 import shop.mtcoding.tstory.model.user.UserRepository;
 import shop.mtcoding.tstory.service.UserService;
+import shop.mtcoding.tstory.util.SHA256;
 
 @RequiredArgsConstructor
 @Controller
@@ -37,6 +37,7 @@ public class UserController {
     private final HttpSession session;
     private final UserRepository userRepository;
     private final UserService userService;
+    private final SHA256 sha256;
 
     // 회원가입 페이지
     @GetMapping("/joinForm")
@@ -54,21 +55,25 @@ public class UserController {
     // 로그인 페이지
     @GetMapping("/loginForm")
     public String loginForm() {
+        User principal = (User) session.getAttribute("principal");
+        if (principal != null) {
+            return "redirect:/";
+        }
         return "/user/loginForm";
     }
 
-    // 로그인 응답
-    @PostMapping("/login")
-    public String login(LoginDto loginDto) {
-        User userPS = userRepository.login(loginDto);
-       
-        if (userPS != null) {
-            session.setAttribute("principal", userPS);
-            return "redirect:/";
-        } else {
-            return "redirect:/loginForm";
-        }
-    }
+     // 로그인 응답
+     @PostMapping("/login")
+     public String login(LoginDto loginDto) {
+         User userPS = userRepository.login(loginDto);
+        
+         if (userPS != null) {
+             session.setAttribute("principal", userPS);
+             return "redirect:/";
+         } else {
+             return "redirect:/loginForm";
+         }
+     }
 
     // 로그아웃
     @GetMapping("/logout")
@@ -85,8 +90,10 @@ public class UserController {
 
     // 비밀번호 확인 페이지
     @GetMapping("/api/passwordCheckForm")
-    public String passwordCheckForm() {
+    public String passwordCheckForm(Model model) {
         User principal = (User) session.getAttribute("principal");
+        model.addAttribute("userImg", userRepository.findById(principal.getUserId()));
+        //model.addAttribute("userImg", principal);
         if (principal == null) {
             return "redirect:/loginForm";
         }
@@ -128,10 +135,11 @@ public class UserController {
     @GetMapping("/api/user/updateForm")
     public String updateForm(Model model) {
         User principal = (User) session.getAttribute("principal");
+        //model.addAttribute("userImg", userRepository.findById(principal.getUserId()));
         if (principal == null) {
             return "redirect:/loginForm";
         }
-        model.addAttribute("user", userRepository.findById(principal.getUserId()));
+        model.addAttribute("userImg", userRepository.findById(principal.getUserId()));
         return "/user/updateForm";
     }
 

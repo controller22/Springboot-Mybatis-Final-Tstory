@@ -19,7 +19,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
                         placeholder="영문, 숫자 5~11자"
                         maxlength="11"
                         minlength="5"
-                        value="love"
+                        
                     />
                 </div>
 
@@ -34,7 +34,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
                         </div>
                         <input
                             oninput="validPassword();"
-                           value="1234"
+                           
                             id="password"
                             type="password"
                             class="my_auth_form_box_input"
@@ -53,7 +53,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
                         </div>
                         <input
                         oninput="validPasswordSame();"
-                            value="1234"
+                            
                             id="passwordSame"
                             type="password"
                             class="my_auth_form_box_input"
@@ -73,7 +73,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
                     </div>
                     <input
                      oninput="checkNickname();validNickname();"
-                       value="love"
+                       
                         id="nickname"
                         class="my_auth_form_box_input"
                         type="text"
@@ -91,7 +91,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
                     </div>
                     <input
                      oninput="checkEmail();validEmail();"
-                       value="shim5013@naver.com"
+                       
                         id="email"
                         class="my_auth_form_box_input"
                         placeholder="이메일을 입력해주세요."

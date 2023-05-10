@@ -99,4 +99,16 @@
 		  WHERE user_id = #{userId}
     </update>
 
+	<select id="findByUsernameAndPassword" resultType="shop.mtcoding.tstory.model.user.User" >
+        SELECT *
+		FROM user_tb
+		WHERE username=#{username} AND password = #{password}
+    </select>
+
+	<select id="findByUsernameAndenPassword" resultType="shop.mtcoding.tstory.model.user.User" >
+        SELECT *
+		FROM user_tb
+		WHERE username=#{username} AND password = #{encPassword}
+    </select>
+
 </mapper>

@@ -123,7 +123,7 @@ public class PostController {
 
 	// 블로그 전체 게시글 목록 페이지
 	@GetMapping("/post/listForm/{userId}")
-	public String list(@PathVariable Integer userId,  Integer page,Model model, String keyword) {
+	public String list(@PathVariable Integer userId, Integer page, Model model, String keyword) {
 		User principal = (User) session.getAttribute("principal");
 		Integer num =0;
 		if (page == null) {
@@ -133,12 +133,11 @@ public class PostController {
 		Integer startNum = page * 5;
 		
 		if (keyword == null || keyword.isEmpty()) {
-			//PagingRespDto paging = postRepository.paging(page, userId, null);
-			System.out.println("디버그 : "+page);
-			//paging.makeBlockInfo();
+			PagingRespDto paging = postRepository.paging(page, userId, null);
+			paging.makeBlockInfo();
 
 			model.addAttribute("postCount", postRepository.postCount(userId, null)); // 전체게시글 개수
-			//model.addAttribute("paging", paging); // 페이징
+			model.addAttribute("paging", paging); // 페이징
 			model.addAttribute("postList",postRepository.findAllPost(userId,null, startNum));
 			model.addAttribute("categoryList", categoryRepository.findByUserId(userId)); 
 			
