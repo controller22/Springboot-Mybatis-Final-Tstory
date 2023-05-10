@@ -1,5 +1,6 @@
 package shop.mtcoding.tstory.contorller;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -43,7 +44,7 @@ public class PostController {
 	private final SubscribeService subscribeService;
 
 	// 게시글 수정하기 페이지
-	@GetMapping("/post/updateForm/{postId}")
+	@GetMapping("/api/post/updateForm/{postId}")
 	public String updateForm( @PathVariable Integer postId, Model model) {
 		User principal = (User) session.getAttribute("principal");
 		if (principal == null) {
@@ -57,17 +58,32 @@ public class PostController {
 	}
 
 	// 게시글 수정 응답
-	@PutMapping("/post/update")
-	public @ResponseBody ResponseDto<?> update(@RequestBody PostUpdateReqDto postUpdateReqDto) {
+	@PutMapping("/api/post/update")
+	public @ResponseBody ResponseDto<?> update(
+		@RequestPart ("file") MultipartFile file,
+		@RequestPart("postUpdateReqDto") PostUpdateReqDto postUpdateReqDto) throws Exception {
 		
 		User principal = (User) session.getAttribute("principal");
-		postService.게시글수정하기(postUpdateReqDto,principal.getUserId());
+		postService.게시글수정하기(postUpdateReqDto,principal.getUserId(),file);
 		// model.addAttribute("userId", principal.getUserId());
 		return new ResponseDto<>(1, "게시글 수정성공", null);
 	}
 
+	// 썸네일 없는 게시글 수정 응답
+	@PutMapping("/api/post/update/noImg")
+	public @ResponseBody ResponseDto<?> updateNoImg(@RequestBody PostUpdateReqDto postUpdateReqDto) {
+		System.out.println("디버그 getNoFile : " + postUpdateReqDto.getNoFile());
+		User principal = (User) session.getAttribute("principal");
+		if (postUpdateReqDto.getNoFile() == null) {
+			System.out.println("디버그 : 원래 썸네일없");
+			postService.원래썸네일없는게시글수정하기(postUpdateReqDto, principal.getUserId());
+		}
+		postService.썸네일없는게시글로수정하기(postUpdateReqDto, principal.getUserId());
+		return new ResponseDto<>(1, "썸네일없는게시글 수정 성공", null);
+	}
+
 	// 게시글 등록 페이지
-	@GetMapping("/post/writeForm")
+	@GetMapping("/api/post/writeForm")
 	public String writeForm(Model model) {
 		User principal = (User) session.getAttribute("principal");
 		if (principal == null) {
@@ -86,7 +102,7 @@ public class PostController {
 	}
 
 	// 게시글 등록 응답
-	@PostMapping("/post/write")
+	@PostMapping("/api/post/write")
 	public @ResponseBody ResponseDto<?> write(@RequestPart("file") MultipartFile file,
 			@RequestPart("postSaveReqDto") PostSaveReqDto postSaveReqDto) throws Exception {
 		
@@ -97,7 +113,7 @@ public class PostController {
 		return new ResponseDto<>(1, "게시글 등록 성공", null);
 	}
 
-	@PostMapping("/post/write/noImg")
+	@PostMapping("/api/post/write/noImg")
 	public @ResponseBody ResponseDto<?> writeNoImg(@RequestBody PostSaveReqDto postSaveReqDto) {
 		System.out.println("디버그 : "+postSaveReqDto.getCategoryId());
 		User principal = (User) session.getAttribute("principal");
@@ -107,7 +123,7 @@ public class PostController {
 
 	// 블로그 전체 게시글 목록 페이지
 	@GetMapping("/post/listForm/{userId}")
-	public String list(@PathVariable Integer userId,  Integer page,Model model, String keyword) {
+	public String list(@PathVariable Integer userId, Integer page, Model model, String keyword) {
 		User principal = (User) session.getAttribute("principal");
 		Integer num =0;
 		if (page == null) {
@@ -117,12 +133,11 @@ public class PostController {
 		Integer startNum = page * 5;
 		
 		if (keyword == null || keyword.isEmpty()) {
-			System.out.println("디버그 : "+page);
-			// PagingRespDto paging = postRepository.paging(page, userId, null);
-			// paging.makeBlockInfo();
+			PagingRespDto paging = postRepository.paging(page, userId, null);
+			paging.makeBlockInfo();
 
 			model.addAttribute("postCount", postRepository.postCount(userId, null)); // 전체게시글 개수
-			// model.addAttribute("paging", paging); // 페이징
+			model.addAttribute("paging", paging); // 페이징
 			model.addAttribute("postList",postRepository.findAllPost(userId,null, startNum));
 			model.addAttribute("categoryList", categoryRepository.findByUserId(userId)); 
 			
@@ -188,7 +203,7 @@ public class PostController {
 	}
 
 	// 게시글 삭제 응답
-	@DeleteMapping("/post/delete/{postId}")
+	@DeleteMapping("/api/post/delete/{postId}")
 	public @ResponseBody ResponseDto<?> delete(@PathVariable Integer postId) {
 
 		postRepository.delete(postId);

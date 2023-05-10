@@ -28,7 +28,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
         <c:if test="${principal.userId==post.userId}">
             <a
                 class="btn btn-outline-warning"
-                href="/post/updateForm/${post.postId}"
+                href="/api/post/updateForm/${post.postId}"
                 style="height:38px;width: 60px;"
                 >수정</a
             >
@@ -61,7 +61,7 @@ function remove() {
     if(confirm("작성하신 게시글이 삭제됩니다. 정말 삭제하시겠습니까?")==true){ 
       $.ajax({
         type: "Delete",
-        url: `/post/delete/${postId}`,
+        url: `/api/post/delete/${postId}`,
 		dataType: "json", // 응답 데이터
 		ContentType: "application/json",
 	}).done((res) => {

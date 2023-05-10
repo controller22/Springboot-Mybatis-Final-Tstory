@@ -17,7 +17,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
                     value="1234"
                     maxlength="20"
                 />
-                <input type="hidden" name="userId", value="${principal.userId}">
+                <input type="hidden" name="userId" value="${principal.userId}">
                 <button class="my_secondary_btn" id="checkBtn">확인</button>
                  <div>
                    <a href="/user/passwordResetForm">아이디/비밀번호 찾기</a>
@@ -39,7 +39,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
             password: $("#password").val()
         };
 
-        $.ajax("/user/checkPassword", {
+        $.ajax("/api/user/checkPassword", {
             type: "POST",
             dataType: "json",
             data: JSON.stringify(data),
@@ -49,7 +49,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
         }).done((res) => {
             if (res.code == 1)  {
                     alert("확인되었습니다.");
-                   location.href = "/user/updateForm";
+                   location.href = "/api/user/updateForm";
                 } else {
                     alert("비밀번호가 맞지 않습니다.");
                     return;

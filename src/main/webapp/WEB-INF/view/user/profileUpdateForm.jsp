@@ -123,7 +123,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
             new Blob([JSON.stringify(data)], { type: "application/json" })
         );
 
-        $.ajax("/user/profileUpdate", {
+        $.ajax("/api/user/profileUpdate", {
             type: "POST",
             data: formData,
             processData: false,
@@ -165,7 +165,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
                 nicknameUpdate: $("#nicknameUpdate").val()
             };
             $.ajax( {
-                url: "/user/updateNickname",
+                url: "/api/user/updateNickname",
                 type: "POST",
                 dataType: "json",
                 data: JSON.stringify(data),

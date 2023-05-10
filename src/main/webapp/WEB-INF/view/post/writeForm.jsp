@@ -70,7 +70,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
             postContent: $("#postContent").val(),
         };
 
-        $.ajax("/post/write/noImg", {
+        $.ajax("/api/post/write/noImg", {
              type: "POST",
             dataType: "json",
             data: JSON.stringify(data),
@@ -106,7 +106,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
             new Blob([JSON.stringify(data)], { type: "application/json" })
         );
 
-        $.ajax("/post/write", {
+        $.ajax("/api/post/write", {
             type: "POST",
             data: formData,
             processData: false, // 쿼리스트링 방지

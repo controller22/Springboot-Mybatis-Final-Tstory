@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.tstory.dto.user.CheckDto;
 import shop.mtcoding.tstory.dto.user.JoinDto;
+import shop.mtcoding.tstory.dto.user.LoginDto;
 import shop.mtcoding.tstory.model.category.CategoryRepository;
 import shop.mtcoding.tstory.model.user.User;
 import shop.mtcoding.tstory.model.user.UserRepository;
@@ -80,4 +81,12 @@ public class UserService {
 		User principal = (User) session.getAttribute("principal");
 		userRepository.updateByProfileImage(profileImg, principal.getUserId());
     }
+
+	@Transactional
+	public void 로그인(LoginDto loginDto) {
+		//String encPassword = sha256.encrypt(loginDto.getPassword());
+		//User userPS = userRepository.findByUsernameAndenPassword(encPassword, loginDto.getUsername());
+		User userPS = userRepository.findByUsernameAndPassword(loginDto);
+		//session.setAttribute("principal", userPS);
+	}
 }

@@ -61,7 +61,7 @@ pageEncoding="UTF-8"%>
             categoryTitle: $("#categoryTitle").val(),
         };
 
-        $.ajax("/category/write", {
+        $.ajax("/api/category/write", {
             type: "POST",
             dataType: "json",
             data: JSON.stringify(data),

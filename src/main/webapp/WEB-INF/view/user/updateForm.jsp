@@ -113,7 +113,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
 
                 <div>
                     <div style="text-align: right">
-                        <a href="/user/profileUpdateForm">
+                        <a href="/api/user/profileUpdateForm">
                             <button
                                 type="submit"
                                 class="btn btn-outline-primary"
@@ -160,7 +160,7 @@ function leave() {
 		userId: $("#userId").val()
 	};
 
-	$.ajax("/user/leave", {
+	$.ajax("/api/user/leave", {
 		type: "DELETE",
 		dataType: "json", // 응답 데이터
 		data: JSON.stringify(data), // http body에 들고갈 요청 데이터
@@ -194,7 +194,7 @@ function leave() {
             email: $("#email").val()
         };
 
-        $.ajax("/user/update", {
+        $.ajax("/api/user/update", {
             type: "POST",
             dataType: "json",
             data: JSON.stringify(data),

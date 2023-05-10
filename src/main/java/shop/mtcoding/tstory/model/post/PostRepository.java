@@ -48,5 +48,11 @@ public interface PostRepository {
 
     public Post postCount(@Param("userId") Integer userId, @Param("keyword") String keyword);
 
+    public void insertUpdate(PostUpdateReqDto postUpdateReqDto);
+
+    public void insertNoUpdate(PostUpdateReqDto postUpdateReqDto);
+
+    public void updateNoThumnail(Post post);
+
 
 }

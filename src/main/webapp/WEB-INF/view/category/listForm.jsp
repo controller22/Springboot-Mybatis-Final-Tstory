@@ -3,7 +3,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
 <div class="container">
   <div class="my_list" style="display: flex; align-items: center;">
     <div class="my_list_category_form">
-      <h5 style="line-height: 50px;">${category.categoryTitle}(${categoryCount.categoryCount})</h5>
+      <h5 style="line-height: 50px; width: 150px;">${category.categoryTitle}(${categoryCount.categoryCount})</h5>
     </div>
     <c:if test="${principal.userId==category.userId}">
    <span class="btn_form" style="display: flex; align-items: center; margin-left: 10px; width: 200px;">
@@ -41,7 +41,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
          <!-- 게시글 작성 -->
          <div class="write_icon">
         <c:if test="${principal.userId == user.userId}">
-        <div class="d-flex justify-content-end my_mb_sm_1" style="padding-left: 700px;">
+        <div class="d-flex justify-content-end my_mb_sm_1" style="padding-left: 530px;">
         <a href="/post/writeForm" class="my_atag_none">
                 <i class="fa-solid fa-pencil fa-2x" style="padding-top: 20px;"></i>
         </a>

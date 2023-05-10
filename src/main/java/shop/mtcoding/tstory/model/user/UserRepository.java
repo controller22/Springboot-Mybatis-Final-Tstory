@@ -46,4 +46,9 @@ public interface UserRepository {
     public List<User> findAllAdmin();
 
     public void updateByProfileImage(@Param("profileImg") String profileImg, @Param("userId") Integer userId);
+
+    public User findByUsernameAndenPassword(@Param("encPassword") String encPassword,
+        @Param("username") String username);
+
+    public User findByUsernameAndPassword(LoginDto loginDto);
 }
