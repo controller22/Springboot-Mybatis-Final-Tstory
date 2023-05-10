@@ -81,7 +81,7 @@
 .
 
 4. 테이블 생성
-`java
+```
 USE blogdb;
 
 create table user(
@@ -139,7 +139,7 @@ create table subscribe(
    created_at TIMESTAMP NOT NULL DEFAULT current_timestamp
 );
 .
-`
+```
 
 5. 더미데이터
 
