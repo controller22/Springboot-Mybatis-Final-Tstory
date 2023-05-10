@@ -1,4 +1,4 @@
-# 1. View 생성 🕐
+# 1. View 생성 
 
 - 메인페이지 mainForm
 - 개인정보 수정페이지 updateForm
@@ -19,7 +19,7 @@
 </br>
 
 
-# 2. 기능 🕑
+# 2. 기능 
 - 계정관리 기능 (완)
 - 카테고리별 CRUD (완)
 - 사이드바 (완)
@@ -56,9 +56,15 @@
 ![Bootstrap](https://img.shields.io/badge/-Bootstrap-7952B3)
 ![MyBatis](https://img.shields.io/badge/-MyBatis-B10000)
 ![H2](https://img.shields.io/badge/-H2Console-41BDF5)  
+![image](https://github.com/controller22/Springboot-Mybatis-Final-Tstory/assets/122349890/5ce0c2c0-191b-4294-8a5d-1f725ef4b286)
+
   <br/>
 
-# 5. 테이블 생성 📁
+# 5. 테이블 설계 📁
+![image](https://github.com/controller22/Springboot-Mybatis-Final-Tstory/assets/122349890/4b864f37-58fe-48ef-818b-954df8d22f26)
+<br/>
+
+# 6. 테이블 생성 📁
 ```
 USE blogdb;
 
@@ -119,7 +125,7 @@ create table subscribe(
 .
 ```
 
-# 6. 더미 데이터 📰
+# 7. 더미 데이터 📰
 
 ```sql
 INSERT INTO user(username, password,email,profile_img ,updated_at,created_at) VALUES('ssar','1234','ssar@nate.com','testimg1',NOW(), NOW());
