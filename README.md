@@ -1,23 +1,37 @@
 1. View 생성
 
 메인페이지 mainForm
+
 개인정보 수정페이지 updateForm
+
 비밀번호 수정페이지 passwordResetForm
+
 로그인페이지 loginForm
+
 회원가입페이지 joinForm
+
 비밀번호확인페이지 checkPasswordForm
+
 게시글 작성페이지 writeForm
+
 게시글 수정페이지 updateForm
+
 게시글 목록페이지 listForm
+
 게시글 상세페이지 detailForm
+
 게시글 상단 post-header
+
 메인 상단 main-header
+
 메인 하단 footer
+
 카테고리 관리페이지 writeForm
+
 카테고리별 게시글 목록페이지 listForm
+
 구독관리 페이지 listForm
 
-.
 
 
 2. 기능
