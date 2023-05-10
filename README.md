@@ -143,7 +143,9 @@ create table subscribe(
 
 5. 더미데이터
 
+```sql
 INSERT INTO user(username, password,email,profile_img ,updated_at,created_at) VALUES('ssar','1234','ssar@nate.com','testimg1',NOW(), NOW());
 INSERT INTO user(username, password,email,profile_img ,updated_at,created_at) VALUES('cos','1234','cos@nate.com','testimg2',NOW(), NOW());
 INSERT INTO user(username, password,email,profile_img ,updated_at,created_at) VALUES('tan','1234','tan@nate.com','testimg3',NOW(), NOW());
-.
+
+```
