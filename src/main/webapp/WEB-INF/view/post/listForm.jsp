@@ -73,10 +73,10 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/post-header.jsp"%>
           			<li class='page-item ${paging.first ? "disabled" : ""}'><a style="color: black;" class="page-link"
           				href="?page=${paging.currentPage-1}&keyword=${paging.keyword}">이전</a></li>
           
-          			<%-- <c:forEach var="num" begin="${paging.startPageNum}" end="${paging.lastPageNum}" step="1">
+          			<c:forEach var="num" begin="${paging.startPageNum}" end="${paging.lastPageNum}" step="1">
           				<li class='page-item ${paging.currentPage == num-1 ? "active" : ""}'><a style="color: black;" class="page-link"
           					href="?page=${num-1}&keyword=${paging.keyword}">${num}</a></li>
-          			</c:forEach> --%>
+          			</c:forEach>
           
           			<li class='page-item ${paging.last ? "disabled" : ""}'><a style="color: black;" class="page-link"
           				href="?page=${paging.currentPage+1}&keyword=${paging.keyword}">다음</a></li>

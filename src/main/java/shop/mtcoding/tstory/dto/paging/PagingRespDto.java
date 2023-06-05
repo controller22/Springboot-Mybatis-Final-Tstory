@@ -1,10 +1,12 @@
 package shop.mtcoding.tstory.dto.paging;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
+@NoArgsConstructor
 public class PagingRespDto {
 	private Integer blockCount; // 상수 한페이지에 페이지 넘수 개수(5) 1-5, 6-10
 	private Integer currentBlock;

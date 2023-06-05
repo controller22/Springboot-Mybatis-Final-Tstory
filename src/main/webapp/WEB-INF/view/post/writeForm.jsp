@@ -71,7 +71,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
         };
 
         $.ajax("/api/post/write/noImg", {
-             type: "POST",
+            type: "POST",
             dataType: "json",
             data: JSON.stringify(data),
             headers: {

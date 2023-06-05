@@ -43,8 +43,9 @@ public interface PostRepository {
 
     public List<PostHistoryRespDto> findAllHistory();
 
-    public PagingRespDto paging(@Param("page") Integer page, @Param("userId") Integer userId,
-    @Param("keyword") String keyword);
+    
+    public PagingRespDto paging(@Param("page") Integer page, @Param("userId") Integer userId, @Param("keyword") String keyword);
+
 
     public Post postCount(@Param("userId") Integer userId, @Param("keyword") String keyword);
 

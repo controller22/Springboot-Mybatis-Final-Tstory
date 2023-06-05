@@ -1,6 +1,5 @@
 package shop.mtcoding.tstory.contorller;
 
-import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.tstory.dto.ResponseDto;
 import shop.mtcoding.tstory.dto.main.HeaderRespDto;
+import shop.mtcoding.tstory.dto.paging.PageReqDto;
 import shop.mtcoding.tstory.dto.paging.PagingRespDto;
 import shop.mtcoding.tstory.dto.post.PostAllRespDto;
 import shop.mtcoding.tstory.dto.post.PostDetailDto;
@@ -121,26 +122,39 @@ public class PostController {
 		return new ResponseDto<>(1, "이미지없는 게시글 등록 성공", null);
 	}
 
+
+
+
+
 	// 블로그 전체 게시글 목록 페이지
 	@GetMapping("/post/listForm/{userId}")
-	public String list(@PathVariable Integer userId, Integer page, Model model, String keyword) {
+	public String list(@PathVariable Integer userId, @RequestParam(name="page", required = false) Integer page, Model model,
+	@RequestParam(name="keyword", required = false) String keyword) {
+
 		User principal = (User) session.getAttribute("principal");
-		Integer num =0;
-		if (page == null) {
-			page = num;
-		}
 		
+		if (page == null) {
+			page = 0;
+		}
+
+		PageReqDto pageReqDto = new PageReqDto();
+		pageReqDto.setPage(page);
+		pageReqDto.setUserId(userId);
+		pageReqDto.setKeyword(keyword);
+
+
 		Integer startNum = page * 5;
+		
 		
 		if (keyword == null || keyword.isEmpty()) {
 			PagingRespDto paging = postRepository.paging(page, userId, null);
+			
 			paging.makeBlockInfo();
 
 			model.addAttribute("postCount", postRepository.postCount(userId, null)); // 전체게시글 개수
 			model.addAttribute("paging", paging); // 페이징
 			model.addAttribute("postList",postRepository.findAllPost(userId,null, startNum));
 			model.addAttribute("categoryList", categoryRepository.findByUserId(userId)); 
-			
 			
 			model.addAttribute("user", userRepository.findById(userId));
 			if (principal != null) {
@@ -149,14 +163,14 @@ public class PostController {
 		}
 
 		if (principal != null) {
-
+			System.out.println("디버그1 : " + page);
 			List<PostAllRespDto> postList = postRepository.findAllPost(principal.getUserId(), keyword,startNum);
 			model.addAttribute("postList", postList); // 블로그 전체게시글
 			
-			/* PagingRespDto paging = postRepository.paging(page, userId, keyword);
+			PagingRespDto paging = postRepository.paging(page, userId, keyword);
 			paging.makeBlockInfoByPostAll(keyword);
 			model.addAttribute("postCount", postRepository.postCount(userId, keyword)); // 전체게시글 개수
-			model.addAttribute("paging", paging); // 페이징 */
+			model.addAttribute("paging", paging); // 페이징 
 			model.addAttribute("categoryList", categoryRepository.findByUserId(userId)); // 사이드바 카테고리 이동 => 공통
 			model.addAttribute("user", userRepository.findById(userId));
 			model.addAttribute("userImg", userRepository.findById(principal.getUserId()));
@@ -166,9 +180,14 @@ public class PostController {
 		else {
 			List<PostAllRespDto> postList = postRepository.findAllPost(userId, keyword,startNum);
 			model.addAttribute("postList", postList); // 블로그 전체게시글
+			PagingRespDto paging = postRepository.paging(page, userId, keyword);
+			paging.makeBlockInfoByPostAll(keyword);
+			model.addAttribute("postCount", postRepository.postCount(userId, keyword)); // 전체게시글 개수
+			model.addAttribute("paging", paging); // 페이징
 			model.addAttribute("categoryList", categoryRepository.findByUserId(userId)); // 사이드바 카테고리 이동 => 공통
-			
 		}
+
+
 		return "/post/listForm";
 	}
 
