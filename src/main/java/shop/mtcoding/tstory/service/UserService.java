@@ -84,9 +84,8 @@ public class UserService {
 
 	@Transactional
 	public void 로그인(LoginDto loginDto) {
-		//String encPassword = sha256.encrypt(loginDto.getPassword());
-		//User userPS = userRepository.findByUsernameAndenPassword(encPassword, loginDto.getUsername());
-		User userPS = userRepository.findByUsernameAndPassword(loginDto);
-		//session.setAttribute("principal", userPS);
+		String encPassword = sha256.encrypt(loginDto.getPassword());
+		User userPS = userRepository.findByUsernameAndenPassword(encPassword, loginDto.getUsername());
+		session.setAttribute("principal", userPS);
 	}
 }

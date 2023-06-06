@@ -27,14 +27,15 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
                     class="usernameValid"
                     style="padding-left: 120px; color: red; display: none"
                 ></span>
+
                 <div class="password_icon">
                     <div style="display: flex">
                         <div class="my_auth_form_box_info_security_detail">
                             비밀번호
                         </div>
+                        
                         <input
                             oninput="validPassword();"
-                           
                             id="password"
                             type="password"
                             class="my_auth_form_box_input"
@@ -52,8 +53,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
                             비밀번호 확인
                         </div>
                         <input
-                        oninput="validPasswordSame();"
-                            
+                        oninput="validPasswordSame();"   
                             id="passwordSame"
                             type="password"
                             class="my_auth_form_box_input"

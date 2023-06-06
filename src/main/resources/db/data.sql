@@ -1,6 +1,8 @@
-INSERT INTO user_tb(username, password, email, nickname, profile_img , role, updated_at,created_at) VALUES('ssar','1234','ssar@nate.com', 'ssar',null,'user',NOW(), NOW());
-INSERT INTO user_tb(username, password, email, nickname, profile_img , role, updated_at,created_at) VALUES('cos','1234','cos@nate.com','cos','프로필이미지1.jpg','admin',NOW(), NOW());
-INSERT INTO user_tb(username, password, email, nickname, profile_img , role, updated_at,created_at) VALUES('tan','1234','tan@nate.com','tan','프로필이미지2.jpg','user',NOW(), NOW());
+-- CREATE ALIAS IF NOT EXISTS hashPassword FOR "shop.mtcoding.tstory.util.SHA256.$encrypt";
+
+INSERT INTO user_tb(username, password, email, nickname, profile_img , role, updated_at,created_at) VALUES('ssar','03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4','ssar@nate.com', 'ssar',null,'user',NOW(), NOW());
+INSERT INTO user_tb(username, password, email, nickname, profile_img , role, updated_at,created_at) VALUES('cos','03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4','cos@nate.com','cos','프로필이미지1.jpg','admin',NOW(), NOW());
+INSERT INTO user_tb(username, password, email, nickname, profile_img , role, updated_at,created_at) VALUES('tan','03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4','tan@nate.com','tan','프로필이미지2.jpg','user',NOW(), NOW());
 
 
 INSERT INTO post_tb(post_title, post_content, post_thumnail, user_id, category_id, updated_at, created_at) 

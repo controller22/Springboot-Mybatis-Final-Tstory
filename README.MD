@@ -1,3 +1,6 @@
+
+# 1. View 생성 🕐
+
 # 발표자료
 [5조 파이널 프로젝트.pptx](https://github.com/controller22/Springboot-Mybatis-Final-Tstory/files/11448315/5.pptx)
 <br/>
@@ -6,8 +9,6 @@ https://youtu.be/aEpCiDY8tpI
 <br/>
 <br/>
 
-
-# 1. View 생성 
 
 - 메인페이지 mainForm
 - 개인정보 수정페이지 updateForm
@@ -28,7 +29,9 @@ https://youtu.be/aEpCiDY8tpI
 </br>
 
 
-# 2. 기능 
+
+# 2. 기능 🕑
+
 - 계정관리 기능 (완)
 - 카테고리별 CRUD (완)
 - 사이드바 (완)
@@ -41,7 +44,8 @@ https://youtu.be/aEpCiDY8tpI
 
 
 
-# 3. 고급 기능 
+# 3. 고급 기능 🕒
+
 - 블로그 구독기능 
 - 구독 목록보기
 - 게시글 좋아요 기능 
@@ -69,11 +73,13 @@ https://youtu.be/aEpCiDY8tpI
 
   <br/>
 
+
 # 5. 테이블 설계 📁
 ![image](https://github.com/controller22/Springboot-Mybatis-Final-Tstory/assets/122349890/4b864f37-58fe-48ef-818b-954df8d22f26)
 <br/>
 
 # 6. 테이블 생성 📁
+
 ```
 USE blogdb;
 
@@ -133,6 +139,7 @@ create table subscribe(
 );
 .
 ```
+
 
 # 7. 더미 데이터 📰
 

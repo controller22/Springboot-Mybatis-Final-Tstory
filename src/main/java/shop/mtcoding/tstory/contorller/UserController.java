@@ -64,15 +64,26 @@ public class UserController {
 
      // 로그인 응답
      @PostMapping("/login")
-     public String login(LoginDto loginDto) {
-         User userPS = userRepository.login(loginDto);
+     public @ResponseBody ResponseDto<?> login(@RequestBody LoginDto loginDto) {
+         System.out.println("디버그 :" );
+        User userIdPS = userRepository.findByUsername(loginDto.getUsername());
+        if (userIdPS == null) {
+            return new ResponseDto<>(-1, "아이디 혹은 비밀번호를 잘못 입력하셨습니다.", null);
+        }
         
-         if (userPS != null) {
-             session.setAttribute("principal", userPS);
-             return "redirect:/";
-         } else {
-             return "redirect:/loginForm";
-         }
+        String encPassword = sha256.encrypt(loginDto.getPassword());
+        
+        User usersPS = userRepository.findByUsernameAndenPassword(encPassword, loginDto.getUsername());
+        if (usersPS == null) {
+            return new ResponseDto<>(-1, "아이디 혹은 비밀번호를 잘못 입력하셨습니다.", null);
+        }
+        if (userIdPS.getRole().equals("admin")) {
+            userService.로그인(loginDto);
+            return new ResponseDto<>(2, "관리자님 환영합니다.", null);
+        }
+        userService.로그인(loginDto);
+        return new ResponseDto(1, "로그인 되셨습니다.", null);
+
      }
 
     // 로그아웃

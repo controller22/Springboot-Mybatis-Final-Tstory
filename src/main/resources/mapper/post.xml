@@ -110,21 +110,44 @@
 		ON p.user_id = u.user_id
 	</select>
 
-	<select id="paging" resultType="shop.mtcoding.tstory.dto.paging.PagingRespDto">
-   		SELECT p.totalCount,p.totalPage,p.currentPage,
-		(case currentPage when 0 then 1 else 0 END) FIRST,
-		(case currentPage when totalPage-1 then 1 else 0 END) last
-	FROM
-		(
-		select  count(*) totalCount, CEILING(count(*)/5) totalPage, #{page} as currentPage, 
-		0 as first, 0 as last
-		FROM post_tb 
-		WHERE user_id=#{userId}
-			<if test="keyword != null">
-			AND post_title like '%${keyword}%'
-			</if> 	
-	) p 
+
+
+
+
+
+
+
+
+
+
+
+	<select id="paging" resultType="shop.mtcoding.tstory.dto.paging.PagingRespDto" >
+   
+	SELECT p.totalCount, p.totalPage, p.currentPage,
+    	(CASE currentPage WHEN 0 THEN 1 ELSE 0 END) AS first,
+    	(CASE currentPage WHEN totalPage-1 THEN 1 ELSE 0 END) AS last
+	FROM (
+    	SELECT COUNT(*) AS totalCount, CEILING(COUNT(*)/5) AS totalPage,
+		CAST(#{page} AS INT) as currentPage,
+    	0 AS first, 0 AS last
+    	FROM post_tb
+    	WHERE user_id = #{userId}
+        <if test="keyword != null">
+        AND post_title like '%${keyword}%'
+        </if>
+		) p
+
     </select>
+
+
+
+
+
+
+
+
+
+
 
 	 <update id="insertUpdate">
          UPDATE post_tb

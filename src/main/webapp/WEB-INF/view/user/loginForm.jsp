@@ -4,7 +4,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
     <div class="my_auth_box">
         <div class="my_auth_form_box">
             <div class="my_auth_form_box_title">JSotry</div>
-            <form action="/login" method="POST">
+            
                 <input
                     class="my_auth_form_box_input"
                     type="text"
@@ -22,7 +22,7 @@ pageEncoding="UTF-8"%> <%@ include file="../layout/main-header.jsp"%>
                     value="1234"
                 />
                 <button class="my_secondary_btn" onclick="login()" >로그인</button>
-            </form>
+            
             <div class="my_auth_form_box_link">
                 <div><a href="/joinForm">회원가입</a></div>
                 <div><a href="/user/passwordResetForm">비밀번호 찾기</a></div>
@@ -43,7 +43,9 @@ function login() {
             type: "POST",
             dataType: "json",
             data: JSON.stringify(data),
-            ContentType: "application/json; charset=utf-8"
+            headers: {
+                "Content-Type": "application/json",
+            },
         }).done((res) => {
             if (res.code == 1) {
                 alert("성공");
