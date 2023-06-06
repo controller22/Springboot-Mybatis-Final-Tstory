@@ -121,14 +121,14 @@
 
 
 
-	<select id="paging" resultType="shop.mtcoding.tstory.dto.paging.PagingRespDto"  parameterType="shop.mtcoding.tstory.dto.paging.PageReqDto">
+	<select id="paging" resultType="shop.mtcoding.tstory.dto.paging.PagingRespDto" >
    
 	SELECT p.totalCount, p.totalPage, p.currentPage,
     	(CASE currentPage WHEN 0 THEN 1 ELSE 0 END) AS first,
     	(CASE currentPage WHEN totalPage-1 THEN 1 ELSE 0 END) AS last
 	FROM (
     	SELECT COUNT(*) AS totalCount, CEILING(COUNT(*)/5) AS totalPage,
-		 #{page} as currentPage,
+		 cast(#{page} AS INT) as currentPage,
     	0 AS first, 0 AS last
     	FROM post_tb
     	WHERE user_id = #{userId}
