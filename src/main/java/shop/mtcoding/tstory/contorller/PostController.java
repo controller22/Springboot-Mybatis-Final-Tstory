@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.tstory.dto.ResponseDto;
 import shop.mtcoding.tstory.dto.main.HeaderRespDto;
-import shop.mtcoding.tstory.dto.paging.PageReqDto;
 import shop.mtcoding.tstory.dto.paging.PagingRespDto;
 import shop.mtcoding.tstory.dto.post.PostAllRespDto;
 import shop.mtcoding.tstory.dto.post.PostDetailDto;
@@ -136,12 +135,6 @@ public class PostController {
 		if (page == null) {
 			page = 0;
 		}
-
-		PageReqDto pageReqDto = new PageReqDto();
-		pageReqDto.setPage(page);
-		pageReqDto.setUserId(userId);
-		pageReqDto.setKeyword(keyword);
-
 
 		Integer startNum = page * 5;
 		

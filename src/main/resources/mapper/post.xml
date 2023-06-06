@@ -128,7 +128,7 @@
     	(CASE currentPage WHEN totalPage-1 THEN 1 ELSE 0 END) AS last
 	FROM (
     	SELECT COUNT(*) AS totalCount, CEILING(COUNT(*)/5) AS totalPage,
-		 cast(#{page} AS INT) as currentPage,
+		CAST(#{page} AS INT) as currentPage,
     	0 AS first, 0 AS last
     	FROM post_tb
     	WHERE user_id = #{userId}
